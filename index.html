@@ -152,8 +152,12 @@
       <tr><td><b>ผู้ตรวจปลายทาง</b></td><td>GACC, ผู้นำเข้า, ผู้บริโภคจีน</td><td>ศุลกากร EU, ผู้ซื้อ, recycler</td></tr>
     </tbody></table></div>
 
+  <h2>15 component ใน Thailand DPP Core</h2>
+  <p>ทั้งสองเส้นทางใช้ component จากชุดเดียวกัน 15 กล่อง แบ่งเป็น 4 กลุ่ม ได้แก่ A · Trust (1–4), B · Identity &amp; Discovery (5–7), C · Exchange &amp; Access (8–11) และ D · Semantics (12–15) แต่ละกล่องบอกหน้าที่ วิธีทำงาน และรับหรือส่งอะไรกับกล่องไหน Core เก็บเฉพาะความเชื่อถือ ตัวระบุ ลิงก์ และกติกา ส่วนเนื้อหา passport อยู่กับบริการ DPP แบบกระจาย</p>
+  <figure><div class="tall"><img src="img/core-15-components.webp" alt="แผนภาพ 15 component ใน Thailand DPP Core แบ่ง 4 กลุ่ม: Trust (Accreditation, Trust Registry, DIA, PKI · e-Sign), Identity &amp; Discovery (ID Schemes, National DPP Registry, National IDR + Link Registry), Exchange &amp; Access (API Gateway, Cross-border GW, Verifier · VCP, DAC) และ Semantics (Thai DPP Core Std., Core Vocabulary, Code lists, CVC Mapping) พร้อมลูกศรการรับส่งข้อมูลระหว่างกล่อง ผู้ออกข้อมูล บริการ DPP ต่างประเทศ และผู้ใช้ และรายละเอียดหน้าที่ วิธีทำงาน การเชื่อมของแต่ละ component" loading="lazy"></div><figcaption>รูปที่ 4 ความสัมพันธ์ของ 15 component ใน Thailand DPP Core: แต่ละกล่องทำอะไร รับอะไรจากใคร ส่งอะไรให้ใคร (เลื่อนดูในกรอบ · ข้อเสนอเชิงแนวคิด อ้างอิง UNTP 0.7.0)</figcaption></figure>
+
   <h2>ทุเรียน → จีน</h2>
-  <figure><img src="img/route-durian-china.webp" alt="เส้นทางทุเรียนไปจีน ไฮไลต์ component ที่ใช้" loading="lazy"><figcaption>รูปที่ 4 component ที่ใช้ในเส้นทางทุเรียน → จีน</figcaption></figure>
+  <figure><img src="img/route-durian-china.webp" alt="เส้นทางทุเรียนไปจีน ไฮไลต์ component ที่ใช้" loading="lazy"><figcaption>รูปที่ 5 component ที่ใช้ในเส้นทางทุเรียน → จีน</figcaption></figure>
   <ol class="steps">
     <li><span class="n" style="background:var(--red)">1</span><div>กรมวิชาการเกษตรออก GAP credential ให้แปลง ลงนามด้วย PKI ผูก DID สวนกับทะเบียนเกษตรกร</div></li>
     <li><span class="n" style="background:var(--red)">2</span><div>โรงคัดบรรจุบันทึก DTE ว่ารับจากแปลงไหน กี่กิโล แล้วออก DPP ของล็อต</div></li>
@@ -169,7 +173,7 @@
   </div>
 
   <h2>แบตเตอรี่ → EU</h2>
-  <figure><img src="img/route-battery-eu.webp" alt="เส้นทางแบตเตอรี่ไป EU ไฮไลต์ component ที่ใช้" loading="lazy"><figcaption>รูปที่ 5 component ที่ใช้ในเส้นทางแบตเตอรี่ → EU</figcaption></figure>
+  <figure><img src="img/route-battery-eu.webp" alt="เส้นทางแบตเตอรี่ไป EU ไฮไลต์ component ที่ใช้" loading="lazy"><figcaption>รูปที่ 6 component ที่ใช้ในเส้นทางแบตเตอรี่ → EU</figcaption></figure>
   <ol class="steps">
     <li><span class="n" style="background:var(--blue)">1</span><div>ผู้ผลิตใช้ DPP provider ที่ผ่าน Accreditation และได้ DID ผูกเลขนิติบุคคล (DIA)</div></li>
     <li><span class="n" style="background:var(--blue)">2</span><div>CB ตรวจ carbon footprint และวัสดุ ออก DCC</div></li>
@@ -179,7 +183,7 @@
     <li><span class="n" style="background:var(--blue)">6</span><div>ผู้ซื้อ recycler ผู้บริโภค เห็นข้อมูลตามสิทธิ์ (DAC)</div></li>
   </ol>
   <p class="note">อาหารรวมถึงทุเรียนอยู่นอกขอบเขต ESPR ไทยจึงเชื่อมกับ EU ผ่านสินค้าอย่างแบตเตอรี่และสิ่งทอ ขั้นที่ 5 (ศุลกากร EU ตรวจการลงทะเบียน) ควรยืนยันกับตัวบท ESPR อีกครั้งก่อนใช้ในเอกสารทางการ</p>
-  <figure><img src="img/sketch-overview.webp" alt="ภาพวาดมือภาพรวม DPP ตาม UNTP" loading="lazy"><figcaption>รูปที่ 6 ภาพวาดมือภาพรวม DPP ตาม UNTP ใช้สื่อสารกับผู้ประกอบการ</figcaption></figure>
+  <figure><img src="img/sketch-overview.webp" alt="ภาพวาดมือภาพรวม DPP ตาม UNTP" loading="lazy"><figcaption>รูปที่ 7 ภาพวาดมือภาพรวม DPP ตาม UNTP ใช้สื่อสารกับผู้ประกอบการ</figcaption></figure>
   <div class="pager"><a href="#concept">← แนวคิดและเทคนิค</a><a href="#tor">ขอบเขตงานตาม TOR →</a></div>
 </section>
 
@@ -222,9 +226,20 @@
   <div class="tbl"><table class="outs">
     <thead><tr><th>ขอบเขต</th><th>ชื่อ</th><th>ช่วงเวลา</th><th>Output</th><th>กิจกรรม</th><th>ความคืบหน้า</th></tr></thead>
     <tbody id="work-summary"></tbody></table></div>
-  <p class="note">อัปเดตสถานะใน Supabase → Table Editor → ตาราง <code>scope_tasks</code> คอลัมน์ <code>status</code> ใส่ <code>todo</code> ยังไม่เริ่ม · <code>doing</code> กำลังทำ · <code>done</code> เสร็จ · <code>blocked</code> ติดปัญหา แล้วรีเฟรชหน้าเว็บ รัน setup.sql ซ้ำไม่ล้างสถานะที่แก้ไว้</p>
+  <p class="note">เปลี่ยนสถานะได้จากช่อง "สถานะ" ในตารางกิจกรรม ครั้งแรกระบบจะถามชื่อผู้แก้และรหัสทีม แล้วบันทึกวันที่ เวลา และชื่อไว้ใต้สถานะ ประวัติการเปลี่ยนทั้งหมดอยู่ในตาราง <code>scope_task_log</code> ใน Supabase ช่องสถานะจะเลือกได้เมื่อเว็บโหลดข้อมูลจาก Supabase สำเร็จ</p>
 
   <div id="work-scopes"></div>
+  <dialog id="who" aria-labelledby="who-title">
+    <form method="dialog">
+      <h3 id="who-title">ยืนยันการเปลี่ยนสถานะ</h3>
+      <p id="who-what" class="what"></p>
+      <label>ชื่อผู้แก้<input name="by" required maxlength="60" autocomplete="name"></label>
+      <label>รหัสทีม<input name="pass" type="password" required autocomplete="current-password"></label>
+      <label class="chk"><input type="checkbox" name="remember" checked> จำไว้ในเครื่องนี้</label>
+      <p id="who-err" class="err" role="alert"></p>
+      <div class="btns"><button value="cancel" formnovalidate>ยกเลิก</button><button value="ok" class="primary">บันทึก</button></div>
+    </form>
+  </dialog>
   <div class="pager"><a href="#tor">← ขอบเขตงานตาม TOR</a><a href="#plan">แผนงาน 8 เดือน →</a></div>
 </section>
 
@@ -265,7 +280,7 @@
     <thead><tr><th>ความเสี่ยง</th><th>ผลกระทบ</th><th>แนวทางลด</th></tr></thead>
     <tbody id="t-risks">
       <tr><td>ฤดูกาลทุเรียน: ลงพื้นที่ช่วง ธ.ค.–ม.ค. นอกฤดู</td><td>เห็นกระบวนการจริงไม่ครบ</td><td>สัมภาษณ์เชิงลึกก่อน แล้วสังเกตรอบสองช่วงต้นฤดู (มี.ค.) · ใช้ข้อมูลฤดู 2569 จากผู้ส่งออกและ NECTEC</td></tr>
-      <tr><td>ประสานฝั่งจีน (GACC ผู้นำเข้า)</td><td>ธุรกรรมจริงไม่ครบถึงปลายทาง</td><td>ผู้ประสานงานภาษาจีนตั้งแต่ M1 · หาผู้นำเข้าที่ร่วมมือผ่านผู้ส่งออก · เตรียมแผนสำรองให้ผู้นำเข้าเป็นผู้ยืนยันปลายทาง</td></tr>
+      <tr><td>ประสานฝั่งจีน (GACC ผู้นำเข้า importer)</td><td>ธุรกรรมจริงไม่ครบถึงปลายทาง</td><td>ผู้ประสานงานภาษาจีนตั้งแต่ M1 · หาผู้นำเข้าที่ร่วมมือผ่านผู้ส่งออก · เตรียมแผนสำรองให้ผู้นำเข้าเป็นผู้ยืนยันปลายทาง</td></tr>
       <tr><td>การเข้าถึงข้อมูลระบบรัฐ (e-Phyto, NSW, ทะเบียน GAP)</td><td>ต้นแบบต่อระบบจริงไม่ได้</td><td>ทำหนังสือในนาม สพธอ. เร็ว · ใช้ sandbox หรือข้อมูลจำลองที่มีโครงสร้างเดียวกัน</td></tr>
       <tr><td>เวลาพัฒนาต้นแบบสั้น (M5–M6)</td><td>ไม่พร้อมก่อนธุรกรรมจริง</td><td>เริ่มพัฒนา core component (IDR, VC, registry) ขนานกับงานออกแบบ ใช้ open source ที่มีอยู่</td></tr>
       <tr><td>ภาระผู้ประกอบการ/เกษตรกร</td><td>ไม่ยอมใช้หรือกรอกซ้ำ</td><td>ดึงจากระบบเดิม · ให้ provider/SaaS ทำแทน · ออกแบบ To-Be ที่ไม่เพิ่มขั้นตอน</td></tr>

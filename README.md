@@ -44,7 +44,12 @@ python3 -m http.server 8000
 
 ## แก้ข้อมูล
 - Gantt, WBS, การ์ดขอบเขตงาน และตารางทุกตาราง: แก้ใน Supabase → Table Editor (ไม่ต้อง push ใหม่ รีเฟรชหน้าเว็บก็เห็น)
-- สถานะกิจกรรมในหน้า Output และกิจกรรม: ตาราง `scope_tasks` คอลัมน์ `status` = `todo` / `doing` / `done` / `blocked` (รัน `setup.sql` ซ้ำไม่ล้างสถานะ แต่ข้อความอื่นที่แก้ใน Table Editor จะถูกเขียนทับด้วยค่าในไฟล์)
+- สถานะกิจกรรมในหน้า Output และกิจกรรม: เลือกจากช่อง "สถานะ" บนหน้าเว็บได้เลย ระบบถามชื่อผู้แก้ + รหัสทีม แล้วบันทึกวันเวลาและชื่อใน `scope_tasks` (`status_changed_at`, `status_changed_by`) และเก็บประวัติทุกครั้งใน `scope_task_log` (รัน `setup.sql` ซ้ำไม่ล้างสถานะ แต่ข้อความอื่นที่แก้ใน Table Editor จะถูกเขียนทับด้วยค่าในไฟล์)
+- ตั้งหรือเปลี่ยนรหัสทีม: รันใน SQL Editor (แทน `รหัสทีม` ด้วยรหัสจริง ห้าม commit รหัสจริงลงไฟล์ในนี้)
+  ```sql
+  insert into public.app_secrets (name, value) values ('task_passcode', extensions.crypt('รหัสทีม', extensions.gen_salt('bf')))
+  on conflict (name) do update set value = excluded.value;
+  ```
 - ข้อมูลสำรองในเว็บ: `FALLBACK` ใน `js/app.js` และแถวในตารางของ `index.html` (ใช้เฉพาะตอนต่อ Supabase ไม่ได้)
 - ข้อความอื่นในแต่ละหน้า: แก้ใน `index.html` (แต่ละหน้าคือ `<section id="...">`)
 - สีหลัก: แก้ตัวแปรใน `:root` ของ `css/style.css`
