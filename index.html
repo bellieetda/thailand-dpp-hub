@@ -20,7 +20,7 @@
   <a class="nl" href="#tor"><span class="n">04</span>ขอบเขตงานตาม TOR</a>
   <a class="nl" href="#plan"><span class="n">05</span>แผนงาน 8 เดือน</a>
   <a class="nl" href="#team"><span class="n">06</span>ทีมงานและผู้เกี่ยวข้อง</a>
-  <div class="navfoot">ข้อมูลรวบรวมจากการหารือและร่าง TOR ลงวันที่ 24 ก.ย. 2569 แผนงานและทีมเป็นข้อเสนอสำหรับ Inception Report</div>
+  <div class="navfoot">ข้อมูลรวบรวมจากการหารือและร่าง TOR ลงวันที่ 24 ก.ย. 2569 แผนงานและทีมเป็นข้อเสนอสำหรับ Inception Report<div class="datasrc" id="datasrc"></div></div>
 </nav>
 <main>
 
@@ -47,7 +47,7 @@
   <h2>ทำไมต้องเริ่มตอนนี้</h2>
   <div class="tbl"><table>
     <thead><tr><th>เมื่อไร</th><th>เหตุการณ์</th><th>ผลต่อไทย</th></tr></thead>
-    <tbody>
+    <tbody id="t-key-dates">
       <tr><td class="id">20 ก.ค. 2026</td><td>EU DPP Registry เปิดใช้งาน เก็บเฉพาะ ID และผู้ประกอบการ ข้อมูลจริงอยู่ที่ผู้ผลิต</td><td>ต้องมี ID และ provider ที่ต่อ API กับ EU ได้</td></tr>
       <tr><td class="id">18 ก.พ. 2027</td><td>Battery Passport ภาคบังคับเริ่มสำหรับแบตเตอรี่บางกลุ่ม (ESPR / Battery Regulation)</td><td>ตรงกับเดือนที่ 4 ของโครงการ ผู้ผลิตแบตไทยต้องเตรียมตัว</td></tr>
       <tr><td class="id">ฤดูกาล 2026</td><td>จีนเข้มงวดการตรวจย้อนกลับ มีกรณีข้อร้องเรียนทุเรียนและการสวมสิทธิ์ GAP</td><td>ต้องให้ GACC ตรวจ GAP ได้เองจากข้อมูลดิจิทัล</td></tr>
@@ -77,7 +77,7 @@
   <h2>5 เสาหลักของ UNTP</h2>
   <div class="tbl"><table>
     <thead><tr><th>เสาหลัก</th><th>องค์ประกอบ</th><th>หน้าที่</th></tr></thead>
-    <tbody>
+    <tbody id="t-untp">
       <tr><td><b>Data</b></td><td><code>DPP</code> <code>DFR</code> <code>DCC</code> <code>DTE</code></td><td>ข้อมูลสินค้า สถานประกอบการ ผลการรับรอง และเหตุการณ์ตรวจสอบย้อนกลับ</td></tr>
       <tr><td><b>Finding</b></td><td><code>IDR</code> <code>VCP</code></td><td>หาข้อมูลจากตัวระบุบนสินค้า (ISO/IEC 18975) แสดงผลได้ทั้งคนและระบบ</td></tr>
       <tr><td><b>Securing</b></td><td><code>VCP</code> <code>DIA</code> <code>DAC</code></td><td>กันการแก้ไข ผูก DID กับตัวตนจริง เข้ารหัสข้อมูลลับเฉพาะผู้มีสิทธิ์</td></tr>
@@ -142,7 +142,7 @@
 
   <div class="tbl"><table>
     <thead><tr><th></th><th>ทุเรียน → จีน</th><th>แบตเตอรี่ → EU</th></tr></thead>
-    <tbody>
+    <tbody id="t-cases">
       <tr><td><b>แรงผลัก</b></td><td>GACC ต้องการตรวจ GAP และที่มาของล็อต</td><td>ESPR / Battery Regulation: Battery Passport 18 ก.พ. 2027</td></tr>
       <tr><td><b>ขอบเขตตาม TOR</b></td><td>As-Is/To-Be, Durian Profile, Prototype, <b>ธุรกรรมจริง</b> + Invoice</td><td>Battery Profile, Prototype แสดงวงจรชีวิตและการแบ่งสิทธิ์ ไม่ต้องมีผู้ประกอบการจริง</td></tr>
       <tr><td><b>Component หลัก</b></td><td>IDR, Trust Registry, API Gateway (e-Phyto · NSW · TLX), CVC</td><td>National DPP Registry, Accreditation, Cross-border GW → EU Registry, DAC</td></tr>
@@ -223,7 +223,7 @@
   <h2>สิ่งส่งมอบที่เสนอ</h2>
   <div class="tbl"><table>
     <thead><tr><th>งวด</th><th>ส่งมอบ</th><th>เนื้อหา</th><th>ขอบเขต</th></tr></thead>
-    <tbody>
+    <tbody id="t-deliverables">
       <tr><td class="id">D1</td><td>สิ้น พ.ย. 69 (M1)</td><td><b>Inception Report</b>: Project Plan, Methodology, Work Plan, Stakeholder Engagement Plan, แผนลงพื้นที่ไทย–จีน, Risk Plan, โครงสร้างทีม</td><td>4.1</td></tr>
       <tr><td class="id">D2</td><td>สิ้น ม.ค. 70 (M3)</td><td><b>Interim 1</b>: Landscape, Stakeholder Map, ผลสัมภาษณ์ ≥ 20 ราย, Focus Group, Gap Analysis, Thailand DPP Reference Architecture, Roadmap ฉบับตั้งต้น, Supply Chain Map, Document & Data Inventory, As-Is</td><td>4.2, 4.3</td></tr>
       <tr><td class="id">D3</td><td>สิ้น มี.ค. 70 (M5)</td><td><b>Interim 2</b>: Pain Point, Value Proposition, To-Be, Cross-Border Data Exchange Requirements, DPP–Invoice linking, Core Data Model + Data Dictionary, Durian/Battery Profile, Technical Components + OpenAPI, ผลรับฟังความคิดเห็น</td><td>4.3, 4.4</td></tr>
@@ -245,7 +245,7 @@
   <h2>ความเสี่ยงหลัก</h2>
   <div class="tbl"><table>
     <thead><tr><th>ความเสี่ยง</th><th>ผลกระทบ</th><th>แนวทางลด</th></tr></thead>
-    <tbody>
+    <tbody id="t-risks">
       <tr><td>ฤดูกาลทุเรียน: ลงพื้นที่ช่วง ธ.ค.–ม.ค. นอกฤดู</td><td>เห็นกระบวนการจริงไม่ครบ</td><td>สัมภาษณ์เชิงลึกก่อน แล้วสังเกตรอบสองช่วงต้นฤดู (มี.ค.) · ใช้ข้อมูลฤดู 2569 จากผู้ส่งออกและ NECTEC</td></tr>
       <tr><td>ประสานฝั่งจีน (GACC ผู้นำเข้า)</td><td>ธุรกรรมจริงไม่ครบถึงปลายทาง</td><td>ผู้ประสานงานภาษาจีนตั้งแต่ M1 · หาผู้นำเข้าที่ร่วมมือผ่านผู้ส่งออก · เตรียมแผนสำรองให้ผู้นำเข้าเป็นผู้ยืนยันปลายทาง</td></tr>
       <tr><td>การเข้าถึงข้อมูลระบบรัฐ (e-Phyto, NSW, ทะเบียน GAP)</td><td>ต้นแบบต่อระบบจริงไม่ได้</td><td>ทำหนังสือในนาม สพธอ. เร็ว · ใช้ sandbox หรือข้อมูลจำลองที่มีโครงสร้างเดียวกัน</td></tr>
@@ -265,7 +265,7 @@
   <h2>โครงสร้างทีมที่เสนอ</h2>
   <div class="tbl"><table>
     <thead><tr><th>บทบาท</th><th>หน้าที่หลัก</th><th>ขอบเขต</th><th>ช่วงทำงานหลัก</th></tr></thead>
-    <tbody>
+    <tbody id="t-team">
       <tr><td><b>Project Manager</b> <span class="pill">TOR</span></td><td>บริหารภาพรวม คุณภาพ ส่งมอบ ประสาน ETDA</td><td>ทั้งหมด</td><td>M1–M8</td></tr>
       <tr><td><b>PMO / Project Coordinator</b> <span class="pill">TOR</span></td><td>ติดตามแผน นัดหมาย เอกสาร ประชุม รายงานความก้าวหน้า</td><td>4.1, 4.8</td><td>M1–M8</td></tr>
       <tr><td><b>ผู้ประสานงานภาษาจีน / ล่าม</b> <span class="pill">TOR</span></td><td>ติดต่อ GACC ผู้นำเข้า ลงพื้นที่จีน แปลเอกสาร TH–CN–EN</td><td>4.1, 4.3, 4.7</td><td>M1–M8 (หนัก M3–M4, M6–M7)</td></tr>
@@ -289,7 +289,7 @@
   <p style="font-size:14px;color:var(--muted)"><b style="color:var(--green)">R</b> ทำหลัก · <b style="color:var(--red)">A</b> อนุมัติ · <b style="color:var(--blue)">S</b> สนับสนุน · C ให้ความเห็น</p>
   <div class="tbl"><table class="raci">
     <thead><tr><th>ขอบเขต</th><th>ETDA</th><th>PM</th><th>Trade Lead</th><th>BA</th><th>Standards</th><th>Data Arch.</th><th>Solution Arch.</th><th>Dev/QA</th><th>จีน</th></tr></thead>
-    <tbody>
+    <tbody id="t-raci">
       <tr><td>4.2 Landscape & Roadmap</td><td class="A">A</td><td class="S">S</td><td class="R">R</td><td class="S">S</td><td class="S">S</td><td class="C">C</td><td class="S">S</td><td class="C">–</td><td class="C">C</td></tr>
       <tr><td>4.3 End-to-End process</td><td class="A">A</td><td class="S">S</td><td class="S">S</td><td class="R">R</td><td class="C">C</td><td class="C">C</td><td class="C">C</td><td class="C">–</td><td class="S">S</td></tr>
       <tr><td>4.4 Data & Technical</td><td class="A">A</td><td class="S">S</td><td class="C">C</td><td class="S">S</td><td class="S">S</td><td class="R">R</td><td class="R">R</td><td class="C">C</td><td class="C">C</td></tr>
@@ -311,7 +311,7 @@
   <h2>กิจกรรมที่ต้องใช้ผู้มีส่วนได้ส่วนเสีย</h2>
   <div class="tbl"><table>
     <thead><tr><th>เดือน</th><th>กิจกรรม</th><th>ผู้เข้าร่วมหลัก</th></tr></thead>
-    <tbody>
+    <tbody id="t-stakeholder-acts">
       <tr><td class="id">M1–M3</td><td>สัมภาษณ์เชิงลึก ≥ 20 ราย/หน่วยงาน</td><td>นโยบาย กำกับ มาตรฐาน วิจัย เอกชน โลจิสติกส์</td></tr>
       <tr><td class="id">M2–M3</td><td>ลงพื้นที่จันทบุรี/ระยอง</td><td>สวน ล้ง ผู้ส่งออก โลจิสติกส์ กรมวิชาการเกษตร</td></tr>
       <tr><td class="id">M3</td><td>Focus Group/Workshop ≥ 1 ครั้ง (Landscape, Gap, Ref. Arch.) + รับฟัง As-Is</td><td>นโยบาย กฎหมาย มาตรฐาน กลุ่มที่ได้รับผลกระทบ</td></tr>
@@ -325,6 +325,8 @@
 </section>
 </main>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="js/config.js" defer></script>
 <script src="js/app.js" defer></script>
 </body>
 </html>
