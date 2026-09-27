@@ -37,6 +37,6 @@ python3 -m http.server 8000
 - กิจกรรมและช่วงเวลาใน Gantt / WBS: แก้ array `A` และ `MS` ใน `js/app.js`
 - สีหลัก: แก้ตัวแปรใน `:root` ของ `css/style.css`
 
-ฟอนต์โหลดจาก Google Fonts (IBM Plex Sans Thai, IBM Plex Mono, Gaegu) ถ้าไม่มีอินเทอร์เน็ตจะใช้ฟอนต์ระบบแทน
+ฟอนต์โหลดจาก Google Fonts (Mitr ทั้งหน้า ตั้งค่าที่ตัวแปร `--font` ใน `css/style.css`) ถ้าไม่มีอินเทอร์เน็ตจะใช้ฟอนต์ระบบแทน
 
 > ข้อเสนอเชิงแนวคิด แผนงานและทีมเป็นข้อเสนอสำหรับ Inception Report ชื่อหน่วยงานและระบบในภาพเป็นตัวอย่างการจัดบทบาท
