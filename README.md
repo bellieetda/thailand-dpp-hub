@@ -7,16 +7,17 @@
 2. แนวคิดและเทคนิค (UNTP, IDR, Thailand DPP Core)
 3. กรณีทุเรียน → จีน และแบตเตอรี่ → EU
 4. ขอบเขตงานตาม TOR
-5. แผนงาน 8 เดือน (พ.ย. 2569 – มิ.ย. 2570)
-6. ทีมงานและผู้เกี่ยวข้อง
+5. Output และกิจกรรม (4.2–4.7: output ที่ต้องส่ง กิจกรรม วิธีทำ หลักฐาน สถานะ)
+6. แผนงาน 8 เดือน (พ.ย. 2569 – มิ.ย. 2570)
+7. ทีมงานและผู้เกี่ยวข้อง
 
 ## โครงสร้างไฟล์
 ```
 index.html      หน้าเว็บ (ทุกหน้าอยู่ในไฟล์เดียว สลับด้วย #hash)
 css/style.css   สไตล์
-js/app.js       สลับหน้า, โหลดข้อมูลจาก Supabase, สร้าง Gantt, WBS, การ์ดขอบเขตงาน และตาราง
+js/app.js       สลับหน้า, โหลดข้อมูลจาก Supabase, สร้าง Gantt, WBS, การ์ดขอบเขตงาน, หน้า Output และกิจกรรม และตาราง
 js/config.js    Project URL + publishable key ของ Supabase (เว้นว่าง = ใช้ข้อมูลในเว็บ)
-supabase/setup.sql  สร้าง 14 ตาราง + ข้อมูลตั้งต้น + RLS (รันใน Supabase SQL Editor)
+supabase/setup.sql  สร้าง 16 ตาราง + ข้อมูลตั้งต้น + RLS (รันใน Supabase SQL Editor)
 img/*.webp      ภาพสถาปัตยกรรมและ infographic
 .nojekyll       ให้ GitHub Pages เสิร์ฟไฟล์ตามจริง
 ```
@@ -35,7 +36,7 @@ python3 -m http.server 8000
 4. รอประมาณ 1–2 นาที เว็บจะอยู่ที่ `https://<username>.github.io/<repo>/`
 
 ## ข้อมูลจาก Supabase
-1. Supabase → SQL Editor → New query → วาง `supabase/setup.sql` ทั้งไฟล์ → Run (ผลต้องขึ้น `ok` ครบ 14 แถว)
+1. Supabase → SQL Editor → New query → วาง `supabase/setup.sql` ทั้งไฟล์ → Run (ผลต้องขึ้น `ok` ครบ 16 แถว)
 2. ใส่ Project URL และ publishable key ใน `js/config.js` (ห้ามใส่ secret / service_role key)
 3. push ขึ้น GitHub ป้ายมุมล่างของเมนูซ้ายจะบอกว่าใช้ข้อมูลจากไหน: เขียว = Supabase, เหลือง = บางตาราง, แดง/เทา = ข้อมูลในเว็บ
 
@@ -43,6 +44,7 @@ python3 -m http.server 8000
 
 ## แก้ข้อมูล
 - Gantt, WBS, การ์ดขอบเขตงาน และตารางทุกตาราง: แก้ใน Supabase → Table Editor (ไม่ต้อง push ใหม่ รีเฟรชหน้าเว็บก็เห็น)
+- สถานะกิจกรรมในหน้า Output และกิจกรรม: ตาราง `scope_tasks` คอลัมน์ `status` = `todo` / `doing` / `done` / `blocked` (รัน `setup.sql` ซ้ำไม่ล้างสถานะ แต่ข้อความอื่นที่แก้ใน Table Editor จะถูกเขียนทับด้วยค่าในไฟล์)
 - ข้อมูลสำรองในเว็บ: `FALLBACK` ใน `js/app.js` และแถวในตารางของ `index.html` (ใช้เฉพาะตอนต่อ Supabase ไม่ได้)
 - ข้อความอื่นในแต่ละหน้า: แก้ใน `index.html` (แต่ละหน้าคือ `<section id="...">`)
 - สีหลัก: แก้ตัวแปรใน `:root` ของ `css/style.css`
