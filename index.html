@@ -199,8 +199,39 @@
   <section id="dl-battery" class="dl-panel" role="tabpanel" hidden>
     <h2>แบตเตอรี่ EV 75 kWh → EU</h2>
     <p>ระดับตัวระบุ: <b>รายชิ้น</b> (<code>idGranularity: "item"</code>) ตามที่ Battery Passport ของ EU ต้องการ แต่ใบรับรองบางใบ เช่น carbon footprint ออกที่ <b>ระดับรุ่น</b> แล้วทุกก้อนในรุ่นนั้นอ้างถึงใบเดียวกัน</p>
+    <p style="font-size:14.5px">ขั้น 1–8 ด้านล่างแสดงว่าข้อมูลเกิดขึ้นอย่างไร ถ้าอยากรู้ว่าข้อมูลถูกใช้อย่างไรตามข้อกำหนด EU <a href="#data" data-jump="dl-bp-eu">ข้ามไปดูตัวอย่างการใช้งาน Battery Passport ↓</a></p>
     <div class="fig" id="dl-fig-battery"></div>
     <div id="dl-steps-battery"></div>
+
+    <h2 id="dl-bp-eu">Battery Passport ตามที่ EU กำหนด: ใครใช้ ใช้อย่างไร</h2>
+    <p>EU Battery Regulation (EU) 2023/1542 มาตรา 77–78 และ Annex XIII กำหนดว่าแบตก้อนหนึ่งต้องมี passport อะไรบ้าง และใครเห็นข้อมูลส่วนไหน ข้างล่างนี้เทียบข้อกำหนดกับ credential ในขั้น 1–8 แล้วยกตัวอย่างการใช้งานจริงตลอดอายุแบต 6 สถานการณ์</p>
+    <div class="tbl"><table>
+      <thead><tr><th style="width:24%">ข้อกำหนด</th><th>สาระ</th><th style="width:30%">ในตัวอย่างนี้</th></tr></thead>
+      <tbody>
+        <tr><td><b>แบตที่ต้องมี</b></td><td>แบต LMT (จักรยาน/สกูตเตอร์ไฟฟ้า) แบตอุตสาหกรรมที่ความจุเกิน 2 kWh และแบต EV ที่วางตลาดหรือเริ่มใช้งานใน EU ตั้งแต่ <b>18 ก.พ. 2027</b> (มาตรา 77)</td><td>แพ็ก EV 75 kWh เข้าข่าย</td></tr>
+        <tr><td><b>ระดับตัวระบุ</b></td><td>passport ต่อแบต <b>หนึ่งก้อน</b> มีตัวระบุเฉพาะ (unique identifier)</td><td><code>idGranularity: "item"</code> GTIN + serial</td></tr>
+        <tr><td><b>ช่องทางเข้าถึง</b></td><td>QR code ที่พิมพ์หรือสลักบนตัวแบต ลิงก์ไปยังตัวระบุเฉพาะ</td><td>QR = GS1 Digital Link → IDR linkset</td></tr>
+        <tr><td><b>ผู้รับผิดชอบ</b></td><td>ผู้ประกอบการที่นำแบตวางตลาด EU ต้องทำให้ข้อมูลถูกต้อง ครบ และเป็นปัจจุบัน มอบให้ผู้ให้บริการทำแทนได้</td><td>สยามอีวีเซลล์ + DPP provider ไทย</td></tr>
+        <tr><td><b>สิทธิ์เข้าถึง</b></td><td>แบ่ง 3 กลุ่ม: สาธารณะ · ผู้มีส่วนได้เสียโดยชอบ · notified body / หน่วยงานกำกับตลาด / Commission (มาตรา 77(2) + Annex XIII)</td><td><code>accessRole</code> ใน linkset + DAC</td></tr>
+        <tr><td><b>สถานะแบต</b></td><td><code>original</code> · <code>repurposed</code> · <code>re-used</code> · <code>remanufactured</code> · <code>waste</code></td><td><code>characteristics.batteryStatus</code></td></tr>
+        <tr><td><b>ชีวิตที่สอง</b></td><td>แบตที่ถูกนำไปใช้ซ้ำ ปรับวัตถุประสงค์ หรือผลิตซ้ำ ต้องมี passport <b>ใบใหม่</b> ที่ลิงก์กลับไปใบเดิม ความรับผิดชอบย้ายไปผู้ที่นำแบตนั้นวางตลาดใหม่</td><td>สถานการณ์ 5</td></tr>
+        <tr><td><b>สิ้นสุด</b></td><td>passport สิ้นสุดเมื่อแบตถูกรีไซเคิลแล้ว</td><td>สถานการณ์ 6</td></tr>
+        <tr><td><b>เทคนิค</b></td><td>machine-readable ใช้มาตรฐานเปิด ทำงานร่วมกันได้ ไม่ผูกกับผู้ขายรายใด และมีสำเนาสำรองกับผู้ให้บริการอิสระ (มาตรา 78)</td><td>VC + <code>backupCopyProvider</code> ในขั้น 6</td></tr>
+      </tbody></table></div>
+
+    <h3>ข้อมูลตาม Annex XIII แบ่งตามสิทธิ์ผู้เห็น</h3>
+    <div class="tbl"><table>
+      <thead><tr><th style="width:20%">กลุ่ม</th><th style="width:18%">ใครเห็น</th><th>ข้อมูลที่ต้องมี (ย่อ)</th><th style="width:24%">อยู่ที่ credential ไหน</th></tr></thead>
+      <tbody>
+        <tr><td><b>ข้อ 1 · สาธารณะ</b></td><td>ทุกคนที่สแกน QR ไม่ต้องยืนยันตัวตน</td><td>ผู้ผลิต หมวดแบต วันที่และสถานที่ผลิต น้ำหนัก ความจุ เคมี สารอันตราย วัตถุดิบสำคัญ (CRM) · carbon footprint และ class · due diligence · recycled content และ renewable content · สมรรถนะและความทนทาน (rated capacity, แรงดัน, กำลัง, อายุรอบใช้งาน, round-trip efficiency, internal resistance) · warranty · ข้อมูลการเก็บคืนและรีไซเคิล</td><td><span class="chip dpp">DPP</span> ขั้น 5 <code>characteristics</code> <code>materialProvenance</code> <code>performanceClaim</code> → <span class="chip dcc">DCC</span> ขั้น 4</td></tr>
+        <tr><td><b>ข้อ 2 · ผู้มีส่วนได้เสีย</b></td><td>ผู้ซ่อม ผู้ปรับใช้ใหม่ ผู้รีไซเคิล + Commission</td><td>องค์ประกอบละเอียดของ cathode, anode, electrolyte · part number และช่องทางติดต่ออะไหล่ · ข้อมูลถอดแยก (exploded diagram, ลำดับถอด, ชนิดตัวยึด, เครื่องมือ, ผังเซลล์) · มาตรการความปลอดภัย</td><td><span class="chip doc">DOC</span> <code>relatedDocument</code> "dismantling" ที่ล็อกด้วย <code>accessRole</code></td></tr>
+        <tr><td><b>ข้อ 3 · ผู้กำกับดูแล</b></td><td>notified body, หน่วยงานกำกับตลาด, Commission</td><td>รายงานผลทดสอบฉบับเต็มที่พิสูจน์ว่าแบตเป็นไปตามข้อกำหนด</td><td><span class="chip dcc">DCC</span> ขั้น 4 + รายงานแนบ</td></tr>
+        <tr><td><b>ข้อ 4 · ข้อมูลรายก้อน</b></td><td>ผู้มีส่วนได้เสีย (เช่น เจ้าของ หรือผู้ที่เจ้าของมอบสิทธิ์) + Commission</td><td>ค่าสมรรถนะปัจจุบัน · State of Health · สถานะแบต · ข้อมูลจากการใช้งาน เช่น จำนวนรอบชาร์จ/คายประจุ และเหตุการณ์ผิดปกติ (อุบัติเหตุ อุณหภูมิเกิน)</td><td><span class="chip dte">DTE</span> ModifyEvent ขั้น 8 + ค่าจาก BMS</td></tr>
+      </tbody></table></div>
+
+    <h3>ตัวอย่างการใช้งาน 6 สถานการณ์ ตลอดอายุแบต</h3>
+    <div id="dl-bp-uses"></div>
+    <div class="note">ชื่อฟิลด์เฉพาะแบต เช่น <code>batteryStatus</code>, <code>carbonFootprintClass</code> และค่า <code>accessRole</code> เป็นข้อเสนอสำหรับ Battery Profile ยังไม่ใช่ศัพท์ทางการของ UNTP รูปแบบข้อมูลของ EU ยังรอ delegated / implementing act ด้านสิทธิ์เข้าถึงและมาตรฐานทางเทคนิค ควรเทียบกับรายการ data attribute ของ <a href="https://thebatterypass.eu/">Battery Pass consortium</a> (DIN DKE SPEC 99100) ก่อนใช้จริง</div>
   </section>
 
   <!-- ================= LINKS SUMMARY ================= -->

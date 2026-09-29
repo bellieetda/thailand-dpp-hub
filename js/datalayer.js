@@ -235,7 +235,7 @@ B.push({n:4,t:'รับรองระดับรุ่น: carbon footprint �
 
 B.push({n:5,t:'ผู้ผลิตออก DPP ของแพ็กรายชิ้น',chip:'dpp',who:'บริษัท สยามอีวีเซลล์',when:'10 ก.พ. 2570 · อายุ 10+ ปี',
  desc:'DPP แพ็กมีทั้งข้อมูลคงที่ (รุ่น เคมี ความจุ วัสดุ) และข้อมูลที่เปลี่ยนตามการใช้งาน (สุขภาพแบต) ข้อมูลแต่ละส่วนเปิดให้ดูตามระดับสิทธิ์ 3 ระดับตาม Battery Regulation',
- fields:[['credentialSubject.id',PROD_B,'ID รายชิ้น (GTIN + serial)'],['idGranularity','item',''],['productCategory','HS 850760 Lithium-ion accumulators',''],['characteristics','NMC811 · 75 kWh · 400 V · 450 กก. · 2,000 รอบ',''],['materialProvenance','Li 2% (recycled 5%) · Ni 8% (4%) · Co 1% (12%) ฯลฯ','รวมจาก DPP เซลล์'],['performanceClaim','carbon 61.5 kg CO₂e/kWh · recycled content · UN 38.3','evidence → DCC ขั้น 4'],['relatedDocument','DTE ประกอบ · คู่มือถอดแยก (ผู้มีส่วนได้เสีย) · ใบรับ EU Registry','']],
+ fields:[['credentialSubject.id',PROD_B,'ID รายชิ้น (GTIN + serial)'],['idGranularity','item',''],['productCategory','HS 850760 Lithium-ion accumulators',''],['characteristics','NMC811 · 75 kWh · 400 V · 450 กก. · 2,000 รอบ · สถานะ original · carbon class B','batteryStatus เปลี่ยนเมื่อแบตเข้าชีวิตที่สอง'],['materialProvenance','Li 2% (recycled 5%) · Ni 8% (4%) · Co 1% (12%) ฯลฯ','รวมจาก DPP เซลล์'],['performanceClaim','carbon 61.5 kg CO₂e/kWh · recycled content · UN 38.3','evidence → DCC ขั้น 4'],['relatedDocument','DTE ประกอบ · คู่มือถอดแยก (ผู้มีส่วนได้เสีย) · ใบรับ EU Registry','']],
  json:vc('DigitalProductPassport','https://vc.siamev.example/dpp/'+SN,MFG,'2027-02-10T18:00:00+07:00','2037-02-10T00:00:00+07:00',{
    "type":["Product"],"id":PROD_B,"name":"EV battery pack 75 kWh NMC811",
    "idScheme":{"id":"https://www.gs1.org/standards/id-keys/gtin","name":"GS1 GTIN + serial"},
@@ -245,14 +245,14 @@ B.push({n:5,t:'ผู้ผลิตออก DPP ของแพ็กราย
    "countryOfProduction":TH,
    "relatedParty":[{"role":"manufacturer","party":{"type":["Party"],"id":MFG.id,"name":MFG.name,"registeredId":"0215569000456"}}],
    "dimensions":{"weight":{"value":450,"unit":"KGM"}},
-   "characteristics":{"batteryCategory":"EV battery","chemistry":"NMC811","ratedCapacity":{"value":75,"unit":"KWH"},"nominalVoltage":{"value":400,"unit":"VLT"},"expectedLifetimeCycles":2000,"manufactureDate":"2027-02-10","stateOfHealth":{"value":100,"unit":"P1"}},
+   "characteristics":{"batteryCategory":"EV battery","chemistry":"NMC811","ratedCapacity":{"value":75,"unit":"KWH"},"nominalVoltage":{"value":400,"unit":"VLT"},"expectedLifetimeCycles":2000,"manufactureDate":"2027-02-10","batteryStatus":"original","carbonFootprintClass":"B","commercialWarranty":{"years":8,"distanceKm":160000},"stateOfHealth":{"value":100,"unit":"P1"}},
    "materialProvenance":[{"name":"Lithium","originCountry":{"countryCode":"AU","countryName":"Australia"},"massFraction":0.02,"recycledMassFraction":0.05},{"name":"Nickel","originCountry":{"countryCode":"ID","countryName":"Indonesia"},"massFraction":0.08,"recycledMassFraction":0.04},{"name":"Cobalt","originCountry":{"countryCode":"CD","countryName":"Congo, DR"},"massFraction":0.01,"recycledMassFraction":0.12},{"name":"Aluminium","originCountry":TH,"massFraction":0.2,"recycledMassFraction":0.3}],
    "performanceClaim":[
      {"type":["Claim"],"name":"Battery carbon footprint","referenceRegulation":[{"id":"https://eur-lex.europa.eu/eli/reg/2023/1542/oj","name":"EU Battery Regulation (EU) 2023/1542"}],"claimedPerformance":[{"metric":{"id":"https://vocab.thdpp.example/metric/battery-carbon-footprint","name":"Carbon footprint (kg CO2e / kWh)"},"measure":{"value":61.5,"unit":"KGM"}}],"evidence":[link('https://vc.verifier-eu.example/cf/SEV-NMC811-75-rayong','Carbon footprint verification','dcc')]},
      {"type":["Claim"],"name":"Recycled content","claimedPerformance":[{"metric":{"name":"Recycled cobalt"},"measure":{"value":12,"unit":"P1"}},{"metric":{"name":"Recycled lithium"},"measure":{"value":5,"unit":"P1"}},{"metric":{"name":"Recycled nickel"},"measure":{"value":4,"unit":"P1"}}]},
      {"type":["Claim"],"name":"Transport safety UN 38.3","evidence":[link('https://vc.batterylab.example/un383/SEV-NMC811-75','UN 38.3 test report','dcc')]}
    ],
-   "relatedDocument":[link(`https://vc.siamev.example/dte/assemble-${SN}`,'ประกอบแพ็ก','dte'),{"linkURL":"https://docs.siamev.example/SEV-NMC811-75/dismantling","linkName":"ข้อมูลถอดแยก / รีไซเคิล (เฉพาะผู้มีส่วนได้เสีย)","linkType":"https://vocab.thdpp.example/linkTypes/dismantling"},{"linkURL":"https://registry.dpp.example.eu/receipt/…","linkName":"EU DPP Registry receipt","linkType":"https://vocab.thdpp.example/linkTypes/registry-receipt"}]
+   "relatedDocument":[link(`https://vc.siamev.example/dte/assemble-${SN}`,'ประกอบแพ็ก','dte'),{"linkURL":"https://docs.siamev.example/SEV-NMC811-75/dismantling","linkName":"ข้อมูลถอดแยก / รีไซเคิล (เฉพาะผู้มีส่วนได้เสีย)","linkType":"https://vocab.thdpp.example/linkTypes/dismantling"},{"linkURL":"https://docs.siamev.example/SEV-NMC811-75/collection","linkName":"การเก็บคืนและรีไซเคิล (สาธารณะ)","linkType":"https://vocab.thdpp.example/linkTypes/end-of-life"},{"linkURL":"https://docs.siamev.example/SEV-NMC811-75/eu-doc","linkName":"EU declaration of conformity","linkType":"https://vocab.thdpp.example/linkTypes/declaration-of-conformity"},{"linkURL":"https://registry.dpp.example.eu/receipt/…","linkName":"EU DPP Registry receipt","linkType":"https://vocab.thdpp.example/linkTypes/registry-receipt"}]
  },status('https://vc.siamev.example/status/1',418)),
  access:[['สาธารณะ','ผู้ผลิต รุ่น เคมี ความจุ น้ำหนัก carbon footprint recycled content'],['ผู้มีส่วนได้เสีย (ซ่อม · รีไซเคิล)','ข้อมูลถอดแยก องค์ประกอบละเอียด ชิ้นส่วนอะไหล่ ข้อควรระวังความปลอดภัย'],['หน่วยงานรัฐ / notified body','รายงานผลทดสอบฉบับเต็ม']],
  links:['DCC carbon + UN 38.3 (ขั้น 4)','DFR โรงงาน (ขั้น 1)','DTE ประกอบ (ขั้น 3)']});
@@ -297,14 +297,15 @@ function renderSteps(list,el){
     let extra='';
     if(s.mb){extra=`<div class="card" style="margin-top:12px;box-shadow:none"><b>ตรวจ mass balance ก่อนออก e-Phyto</b><div class="mb">${PLOTS.map(p=>{const tot=p[4]+p[2],pct=Math.round(tot/p[3]*100);return `<div>${p[1]} (${p[0]}) · สะสมฤดูนี้ ${tot.toLocaleString()} / ${p[3].toLocaleString()} กก.<div class="bar"><i style="width:${pct}%"></i></div></div><div class="ok">${pct}% ✓</div>`}).join('')}</div><p style="font-size:13.5px;color:var(--muted);margin:8px 0 0">สะสม = ส่งก่อนหน้าในฤดูนี้ + ล็อตนี้ ถ้าเกิน 100% ของผลผลิตคาดการณ์ใน DCC GAP ระบบหยุดการออก e-Phyto</p></div>`}
     if(s.access){extra=`<div class="tbl"><table><thead><tr><th>ระดับสิทธิ์ (DAC)</th><th>เห็นอะไร</th></tr></thead><tbody>${s.access.map(a=>`<tr><td><b>${a[0]}</b></td><td>${a[1]}</td></tr>`).join('')}</tbody></table></div>`}
-    if(s.checks){extra=`<div class="tbl"><table><thead><tr><th>GACC ตรวจ</th><th>ผล</th></tr></thead><tbody>${s.checks.map(c=>`<tr><td>${c[0]}</td><td class="ok">${c[1]}</td></tr>`).join('')}</tbody></table></div>`}
+    if(s.checks){extra=`<div class="tbl"><table><thead><tr><th>${esc(s.checksHead||'GACC ตรวจ')}</th><th>ผล</th></tr></thead><tbody>${s.checks.map(c=>`<tr><td>${c[0]}</td><td class="ok">${c[1]}</td></tr>`).join('')}</tbody></table></div>`}
+    const head=s.head||['ฟิลด์','ค่าตัวอย่าง','หมายเหตุ'];
     return `<article class="step" style="--c:${CV[s.chip]}">
       <div class="shead"><div class="snum">${s.n}</div><div><h3>${esc(s.t)}</h3>
-      <div class="smeta"><span class="chip ${s.chip}">${LB[s.chip]}</span><span>ผู้ออก: ${esc(s.who)}</span><span>เมื่อ: ${esc(s.when)}</span></div></div></div>
+      <div class="smeta"><span class="chip ${s.chip}">${LB[s.chip]}</span><span>${s.whoLabel||'ผู้ออก'}: ${esc(s.who)}</span>${s.right?`<span>สิทธิ์: ${esc(s.right)}</span>`:''}<span>เมื่อ: ${esc(s.when)}</span></div></div></div>
       <p class="sdesc">${esc(s.desc)}</p>
-      <div class="tbl"><table class="ft"><thead><tr><th>ฟิลด์</th><th>ค่าตัวอย่าง</th><th>หมายเหตุ</th></tr></thead><tbody>${rows}</tbody></table></div>
+      <div class="tbl"><table class="ft"><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>
       ${extra}
-      <details><summary>ดู JSON ${s.chip==='doc'?'(ย่อ)':'ของ credential'}</summary><pre>${hl(s.json)}</pre></details>
+      <details><summary>${s.jsonLabel||`ดู JSON ${s.chip==='doc'?'(ย่อ)':'ของ credential'}`}</summary><pre>${hl(s.json)}</pre></details>
       <div class="links">เชื่อมกับ: ${s.links.map(l=>`<span class="lk">${esc(l)}</span>`).join('')}</div>
     </article>`}).join('');
 }
