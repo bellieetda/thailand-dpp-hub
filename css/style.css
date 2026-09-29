@@ -192,6 +192,7 @@ a:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:6
 #data .mb{display:grid;grid-template-columns:1fr auto;gap:4px 14px;font-size:14px;margin-top:8px}
 #data .bar{height:10px;border-radius:6px;background:var(--surface2);overflow:hidden;margin-top:4px}
 #data .bar i{display:block;height:100%;background:var(--dcc)}
+#data #dl-bp-eu{scroll-margin-top:72px}
 #data .dl-src{font-size:13px;color:var(--muted);margin-top:28px;padding-top:14px;border-top:1px solid var(--line);max-width:none}
 @media (max-width:640px){
   #data .ft thead{display:none}

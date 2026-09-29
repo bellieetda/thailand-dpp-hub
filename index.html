@@ -148,6 +148,7 @@
     <button role="tab" data-t="dl-overview" aria-selected="true">ภาพรวม 4 credential</button>
     <button role="tab" data-t="dl-durian" aria-selected="false">ทุเรียน → จีน</button>
     <button role="tab" data-t="dl-battery" aria-selected="false">แบตเตอรี่ → EU</button>
+    <button role="tab" data-t="dl-bpready" aria-selected="false">Battery Pass-Ready</button>
     <button role="tab" data-t="dl-links" aria-selected="false">สรุปการเชื่อมโยง</button>
   </nav>
 
@@ -234,6 +235,59 @@
     <div class="note">ชื่อฟิลด์เฉพาะแบต เช่น <code>batteryStatus</code>, <code>carbonFootprintClass</code> และค่า <code>accessRole</code> เป็นข้อเสนอสำหรับ Battery Profile ยังไม่ใช่ศัพท์ทางการของ UNTP รูปแบบข้อมูลของ EU ยังรอ delegated / implementing act ด้านสิทธิ์เข้าถึงและมาตรฐานทางเทคนิค ควรเทียบกับรายการ data attribute ของ <a href="https://thebatterypass.eu/">Battery Pass consortium</a> (DIN DKE SPEC 99100) ก่อนใช้จริง</div>
   </section>
 
+  <!-- ================= BATTERY PASS-READY ================= -->
+  <section id="dl-bpready" class="dl-panel" role="tabpanel" hidden>
+    <h2>Battery Pass-Ready: ทำ passport แบตให้ผ่านการทดสอบตามมาตรฐาน EU ทีละขั้น</h2>
+    <p><a href="https://thebatterypass.eu/battery-pass-ready/">BatteryPass-Ready</a> เป็นโครงการต่อจาก Battery Pass (เม.ย. 2025 – มี.ค. 2027) นำโดย Fraunhofer IPK ร่วมกับ acatech, GEFEG และ TU Berlin ทุนจากกระทรวงเศรษฐกิจเยอรมนี (BMWE) ทำ <b>test environment</b> ให้ผู้ผลิตและผู้ให้บริการทดสอบระบบ battery passport ของตัวเองก่อนวันบังคับใช้ 18 ก.พ. 2027 ว่าข้อมูลครบ รูปแบบถูก และคุยกับระบบของ EU ได้จริงตามมาตรฐาน CEN/CENELEC JTC 24</p>
+    <div class="tbl"><table>
+      <thead><tr><th style="width:22%">เอกสาร</th><th style="width:18%">ตอบคำถาม</th><th>สาระที่ใช้ในหน้านี้</th></tr></thead>
+      <tbody>
+        <tr><td><b>Content Guidance</b> (Battery Pass, 2023) → <a href="https://thebatterypass.eu/battery-pass-ready/resources/">Data Attribute Longlist v2.0</a> (ส.ค. 2026)</td><td>มีข้อมูลอะไรบ้าง</td><td>92 attribute ใน 8 หมวด พร้อมชื่อ JSON key สิทธิ์เข้าถึง static/dynamic และบอกว่าตัวไหนบังคับตั้งแต่ ก.พ. 2027 · อ้างอิง DIN DKE SPEC 99100</td></tr>
+        <tr><td><b><a href="https://thebatterypass.eu/assets/images/technical-guidance/pdf/2024_BatteryPassport_Technical_Guidance.pdf">Technical Guidance</a></b> (Battery Pass, 2024)</td><td>สร้างระบบอย่างไร</td><td>สถาปัตยกรรม 3 ส่วน: EC central services · distributed DPP system ของผู้ประกอบการ · third-party services (backup) และ translator service สำหรับแปลงข้อมูลข้ามมาตรฐาน</td></tr>
+        <tr><td><b><a href="https://thebatterypass.eu/wp-content/uploads/BatteryPass-Ready_User-Stories_v1.0.cleaned.pdf">User Stories v1.0</a></b> (BatteryPass-Ready, มิ.ย. 2026)</td><td>ทดสอบอย่างไร</td><td>8 user story: ลงทะเบียน · อ่านข้อมูลสาธารณะ · อ่านข้อมูลควบคุม · ค้นหา · อัปเดต · ลบ · ซ่อม/รีไซเคิล พร้อม failure scenario และ test scenario ตาม EN 18222 (API) และ EN 18239 (สิทธิ์เข้าถึง)</td></tr>
+        <tr><td><b><a href="https://batterypass-ready.gefeg.com/">Test environment</a></b></td><td>ลองของจริง</td><td>ส่ง passport เข้าไปตรวจความครบ รูปแบบ และการโต้ตอบกับ Registry / Backup แบบจำลอง</td></tr>
+      </tbody></table></div>
+
+    <h2>ใครอยู่ในระบบ และคุยกันผ่านอะไร</h2>
+    <p>passport ตัวจริงไม่ได้อยู่ที่ EU Registry แต่อยู่ที่ระบบของผู้ประกอบการ (หรือ Main Service Provider ที่ทำแทน) EU Registry เก็บแค่ตัวระบุไว้ค้นหา และต้องมีสำเนาสำรองกับ Backup Service Provider ทุกฝ่ายคุยกันผ่าน API มาตรฐาน EN 18222</p>
+    <div class="fig" id="dl-fig-bpready"></div>
+    <div class="tbl"><table>
+      <thead><tr><th style="width:22%">บทบาท (JTC 24)</th><th>หน้าที่</th><th style="width:16%">ยืนยันตัวตนด้วย</th><th style="width:24%">ในกรณีไทย (ตัวอย่าง)</th></tr></thead>
+      <tbody>
+        <tr><td><b>Economic Operator (EO)</b></td><td>ผู้รับผิดชอบ passport สร้าง ดูแล กำหนดสิทธิ์ ลบ</td><td>eIDAS กับ Registry</td><td>สยามอีวีเซลล์ หรือผู้นำเข้า/ตัวแทนใน EU</td></tr>
+        <tr><td><b>Main Service Provider (MSP)</b></td><td>โฮสต์ passport และ API แทน EO ห้ามนำข้อมูลไปใช้เกินบริการ (มาตรา 78)</td><td>eIDAS กับ Registry</td><td>DPP provider ไทยที่ผ่านการรับรอง</td></tr>
+        <tr><td><b>Backup Service Provider (BSP)</b></td><td>เก็บสำเนาสำรองและเวอร์ชันเก่า ต้องทำก่อนลงทะเบียน</td><td>OAuth 2.0</td><td>ผู้ให้บริการอิสระอีกรายที่ไม่ใช่ MSP</td></tr>
+        <tr><td><b>EC Registry</b></td><td>ดัชนีกลาง รับเฉพาะ DppRegistryEntry ออก Registration ID</td><td>—</td><td>ระบบของ European Commission</td></tr>
+        <tr><td><b>Authorities</b></td><td>MSA ศุลกากร notified body Commission อ่านข้อมูลควบคุม</td><td>eIDAS</td><td>ศุลกากร NL, MSA</td></tr>
+        <tr><td><b>Regulated base roles</b></td><td>ผู้รีไซเคิล ผู้ปรับสภาพ ได้สิทธิ์ตามกฎหมายโดยตรง</td><td>eIDAS</td><td>โรงรีไซเคิลใน EU</td></tr>
+        <tr><td><b>Other third parties</b></td><td>ผู้ซ่อม ลูกค้า คู่ค้า ได้สิทธิ์ตามที่ EO มอบ</td><td>OAuth 2.0 / OpenID Connect</td><td>อู่อิสระ ผู้ซื้อรถมือสอง</td></tr>
+        <tr><td><b>Public users</b></td><td>สแกน QR อ่านข้อมูลสาธารณะ ไม่ต้องยืนยันตัวตน ทั้งใน/นอก EU</td><td>ไม่ต้อง</td><td>ผู้ซื้อรถ</td></tr>
+      </tbody></table></div>
+
+    <h2>ข้อมูลที่ต้องมี: Data Attribute Longlist v2.0</h2>
+    <p>92 attribute แบ่ง 8 หมวด ตัวเลขข้างล่างนับจาก longlist โดยตรง คอลัมน์ขวาสุดบอกว่าในระบบไทยค่านั้นมาจาก credential ไหน ระบบไทยเก็บหลักฐานเป็น UNTP credential แล้ว MSP แปลงเป็น passport รูปแบบ EU (บทบาท translator service ใน Technical Guidance)</p>
+    <div class="tbl"><table>
+      <thead><tr><th>หมวด (JSON key)</th><th>จำนวน</th><th>สาธารณะ</th><th>จำกัดสิทธิ์</th><th>dynamic</th><th>ยังไม่บังคับ ก.พ. 27</th><th style="width:26%">มาจาก credential ไหน</th></tr></thead>
+      <tbody id="dl-bpr-cats"></tbody></table></div>
+    <div class="note">หมวด <b>carbon footprint</b> และ <b>supply chain due diligence</b> ทั้งหมด รวมถึง recycled content ของ Ni/Co/Li/Pb ยัง<b>ไม่บังคับ</b>ตั้งแต่ 18 ก.พ. 2027 ตาม longlist v2.0 เพราะรอ delegated act แต่ควรเตรียมข้อมูลไว้ ข้อมูล dynamic มี 17 ตัว ในจำนวนนี้ 14 ตัวเป็นสมรรถนะและ negative events ซึ่งยังไม่มีกติกาทางการว่าต้องอัปเดตถี่แค่ไหน</div>
+
+    <h2>11 ขั้นตามแนว Battery Pass-Ready</h2>
+    <p>แต่ละขั้นบอกว่าใครทำ เรียก API อะไร เกิดข้อมูลอะไร และ test environment จะตรวจอะไร (เลือกมาจาก failure / test scenario ในเอกสาร User Stories) ตัวอย่างใช้แบต 75 kWh ก้อนเดียวกับแท็บแบตเตอรี่ → EU</p>
+    <div id="dl-bpr-steps"></div>
+
+    <h3>สถานะของ passport (dppStatus) ตลอดอายุ</h3>
+    <div class="tbl"><table>
+      <thead><tr><th style="width:22%">dppStatus</th><th>เกิดเมื่อ</th><th style="width:26%">ขั้น</th></tr></thead>
+      <tbody>
+        <tr><td class="f">active</td><td>เวอร์ชันปัจจุบัน อัปเดตได้เฉพาะสถานะนี้</td><td>ขั้น 3, 9</td></tr>
+        <tr><td class="f">archived</td><td>เวอร์ชันเก่าหลังอัปเดต ได้ DPP ID ใหม่ทุกครั้งที่อัปเดตสำคัญ ยังอ่านย้อนหลังได้ด้วย readDPPVersionByIdAndDate</td><td>ขั้น 9</td></tr>
+        <tr><td class="f">inactive</td><td>passport เดิมหลังแบตถูกนำไป re-use / repurpose / remanufacture แล้วมี passport ใบใหม่ลิงก์กลับมา</td><td>ขั้น 10 (ทางเลือก)</td></tr>
+        <tr><td class="f">marked-for-deletion</td><td>หลังรีไซเคิลหรือส่งออกนอก EU ตั้งได้เฉพาะผู้รีไซเคิลกับ EO หลังจากนี้แก้ไขไม่ได้</td><td>ขั้น 10</td></tr>
+        <tr><td class="f">invalid</td><td>หน่วยงานกำกับตลาดระบุว่าไม่ถูกต้อง</td><td>—</td></tr>
+      </tbody></table></div>
+    <div class="note">BatteryPass-Ready ระบุเองว่าเอกสารทั้งหมดอิงร่าง Registry Act, ร่าง Access Rights Act และมาตรฐาน EN 18239 / EN 18246 ที่ยังเป็นร่าง ณ ก.ย. 2026 ขั้นตอนและชื่อฟิลด์อาจเปลี่ยน ตัวเลขใน JSON เป็นข้อมูลสมมติ ส่วนการแปลงจาก UNTP credential เป็นข้อเสนอของโครงการนี้ ไม่ใช่ข้อกำหนดของ BatteryPass-Ready</div>
+  </section>
+
   <!-- ================= LINKS SUMMARY ================= -->
   <section id="dl-links" class="dl-panel" role="tabpanel" hidden>
     <h2>สองเคสต่างกันตรงไหน</h2>
@@ -265,7 +319,7 @@
     <div class="note">หลักสำคัญ: ไม่มี credential ใบไหน "รวม" ข้อมูลทุกอย่างไว้ DPP เป็นแค่จุดตั้งต้นที่มีลิงก์ไปใบอื่น ผู้ตรวจต้องเดินตามลิงก์และ verify ลายเซ็นทีละใบ ข้อมูลแต่ละส่วนจึงยังเป็นของผู้ออกเดิม</div>
   </section>
 
-  <p class="dl-src">อ้างอิงโครงข้อมูลจาก <a href="https://untp.unece.org/docs/0.7.0/specification/DigitalProductPassport">UNTP 0.7.0 DPP</a>, <a href="https://untp.unece.org/docs/0.7.0/specification/DigitalFacilityRecord">DFR</a>, <a href="https://untp.unece.org/docs/0.7.0/specification/ConformityCredential">DCC</a>, <a href="https://untp.unece.org/docs/0.7.0/specification/DigitalTraceabilityEvents">DTE</a> · ตัวอย่างเป็นข้อมูลสมมติเพื่อการออกแบบ Durian / Battery Profile</p>
+  <p class="dl-src">อ้างอิงโครงข้อมูลจาก <a href="https://untp.unece.org/docs/0.7.0/specification/DigitalProductPassport">UNTP 0.7.0 DPP</a>, <a href="https://untp.unece.org/docs/0.7.0/specification/DigitalFacilityRecord">DFR</a>, <a href="https://untp.unece.org/docs/0.7.0/specification/ConformityCredential">DCC</a>, <a href="https://untp.unece.org/docs/0.7.0/specification/DigitalTraceabilityEvents">DTE</a> · ข้อกำหนด Battery Passport จาก <a href="https://eur-lex.europa.eu/eli/reg/2023/1542/oj">EU Battery Regulation (EU) 2023/1542</a> มาตรา 77–78 และ Annex XIII · ขั้นตอนและชื่อฟิลด์ Battery Pass-Ready จาก <a href="https://thebatterypass.eu/battery-pass-ready/resources/">Data Attribute Longlist v2.0 และ User Stories v1.0</a> (BatteryPass-Ready Consortium, CC BY 4.0) · ตัวอย่างเป็นข้อมูลสมมติเพื่อการออกแบบ Durian / Battery Profile</p>
   <div class="pager"><a href="#concept">← แนวคิดและเทคนิค</a><a href="#cases">กรณีทุเรียน + แบตเตอรี่ →</a></div>
 </section>
 

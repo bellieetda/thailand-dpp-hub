@@ -288,6 +288,207 @@ B.push({n:8,t:'หลายปีต่อมา: ตรวจสุขภาพ
  }]),
  links:['DPP แพ็ก (ID เดิม)','IDR เพิ่มลิงก์ dte']});
 
+/* ---------------- battery passport use cases (EU Battery Regulation 2023/1542 Art. 77–78, Annex XIII) ---------------- */
+const ROLE=r=>`untp:accessRole#${r}`;
+const SL={"type":["CredentialIssuer"],"id":"did:web:secondlife.example","name":"SecondLife Storage GmbH (ตัวอย่าง)"};
+const PROD_SL=`https://id.secondlife.example/01/04098765432107/21/SL-ESS-2035-0091`;
+const USE_H=['ข้อมูลที่ใช้','ค่าตัวอย่าง','มาจาก'];
+const U=[];
+U.push({n:'A',t:'ศุลกากรและหน่วยงานกำกับตลาดตรวจตอนนำเข้าที่รอตเตอร์ดัม',chip:'dcc',whoLabel:'ผู้ใช้',who:'ศุลกากร NL · หน่วยงานกำกับตลาด (MSA)',right:'ผู้กำกับดูแล · Annex XIII ข้อ 3',when:'25 มี.ค. 2570',head:USE_H,
+ desc:'แบตที่ไม่มี passport หรือ passport ไม่ตรงกับตัวแบต วางตลาด EU ไม่ได้ ด่านสแกน QR เทียบกับใบขนและ Registry ส่วน MSA ยื่น credential ยืนยันว่าเป็นหน่วยงานกำกับ จึงเปิดรายงานผลทดสอบฉบับเต็มที่คนทั่วไปมองไม่เห็นได้',
+ fields:[['QR บนแบต → ตัวระบุ',PROD_B,'ต้องตรงกับใบขนและ Registry'],['การลงทะเบียน','EU DPP Registry receipt','ขั้น 6'],['Carbon footprint study ฉบับเต็ม','ข้อมูลกิจกรรม ขอบเขต วิธีคำนวณ','DCC ขั้น 4 · accessRole: Authority'],['UN 38.3 test report','ผลทดสอบ 8 รายการ (T1–T8)','DCC ของแล็บ · accessRole: Authority'],['EU declaration of conformity','ลิงก์สาธารณะใน DPP','DPP ขั้น 5 relatedDocument']],
+ checksHead:'หน่วยงาน EU ตรวจ',
+ checks:[['ID บน QR = ID ในใบขน = ID ใน EU DPP Registry','✓'],['ลายเซ็นของ DPP และ DCC ทุกใบถูกต้อง ยังไม่ถูกเพิกถอน','✓'],['ผู้ออก DCC carbon footprint อยู่ใน trust list ของหน่วยทวนสอบ','✓'],['DCC carbon ครอบคลุมรุ่น SEV-NMC811-75 และโรงงานระยองที่ผลิตก้อนนี้','✓'],['มีสำเนาสำรองกับผู้ให้บริการอิสระ (มาตรา 78)','✓']],
+ jsonLabel:'ดู JSON คำขอของหน่วยงานกำกับ (แนวคิด)',
+ json:{"request":{"method":"GET","url":`${PROD_B}?linkType=all`,"authorization":"Bearer <Verifiable Presentation ของ MSA>"},
+   "presentation (ย่อ)":{"type":["VerifiablePresentation"],"holder":"did:web:msa-nl.example","verifiableCredential":[{"type":["VerifiableCredential","AuthorityCredential"],"issuer":"did:web:eu-trust-list.example","credentialSubject":{"id":"did:web:msa-nl.example","role":"market surveillance authority","country":"NL"}}]},
+   "response (ลิงก์ที่เปิดเพิ่มสำหรับหน่วยงาน)":[{"href":"https://vc.verifier-eu.example/cf/SEV-NMC811-75-rayong/study","type":"application/pdf","title":"Carbon footprint study (full)","accessRole":[ROLE('Authority')]},{"href":"https://vc.batterylab.example/un383/SEV-NMC811-75/report","type":"application/pdf","title":"UN 38.3 test report","accessRole":[ROLE('Authority')]}]},
+ links:['DPP แพ็ก (ขั้น 5)','DCC ขั้น 4','EU Registry (ขั้น 6)']});
+
+U.push({n:'B',t:'ผู้ซื้อรถในเยอรมนีสแกน QR ดูข้อมูลแบต',chip:'dpp',whoLabel:'ผู้ใช้',who:'ผู้ซื้อรถ · ตัวแทนจำหน่าย',right:'สาธารณะ · Annex XIII ข้อ 1',when:'เม.ย. 2570 ที่โชว์รูม',head:USE_H,
+ desc:'ไม่ต้องล็อกอิน resolver ส่งกลับเฉพาะลิงก์ที่ไม่ล็อกสิทธิ์ แอปแสดง DPP ตามภาษาของเครื่อง ผู้ซื้อเทียบ carbon footprint และ recycled content ระหว่างรุ่นได้ และแอปตรวจลายเซ็นกับ DCC ให้ ไม่ต้องเชื่อแค่โบรชัวร์',
+ fields:[['ผู้ผลิต · หมวด · วันและสถานที่ผลิต','สยามอีวีเซลล์ · EV battery · 10 ก.พ. 2027 · ระยอง TH','DPP characteristics'],['เคมี · ความจุ · น้ำหนัก','NMC811 · 75 kWh · 450 กก.','DPP characteristics'],['Carbon footprint + class','61.5 kg CO₂e/kWh · class B','DPP claim → DCC ขั้น 4'],['Recycled content','Co 12% · Li 5% · Ni 4%','DPP performanceClaim'],['อายุและการรับประกัน','2,000 รอบ · 8 ปี / 160,000 กม.','DPP characteristics'],['การเก็บคืน','จุดรับคืน ห้ามทิ้งรวมขยะทั่วไป','DPP relatedDocument']],
+ jsonLabel:'ดู JSON linkset ที่คนทั่วไปได้รับ',
+ json:{"request":{"method":"GET","url":`${PROD_B}?linkType=all`,"accept-language":"de"},
+   "linkset":[{"anchor":PROD_B,
+     "dpp":[{"href":`https://vc.siamev.example/dpp/${SN}`,"type":"application/vc+jwt","hreflang":["en","de","th"],"title":"Battery passport"}],
+     "dcc":[{"href":"https://vc.verifier-eu.example/cf/SEV-NMC811-75-rayong","type":"application/vc+jwt","title":"Carbon footprint verification"}],
+     "end-of-life":[{"href":"https://docs.siamev.example/SEV-NMC811-75/collection","type":"text/html","hreflang":["de","en"]}]}],
+   "ไม่แสดง":"ลิงก์ที่มี accessRole (ข้อมูลถอดแยก รายงานผลทดสอบ SoH) จะไม่อยู่ในคำตอบของผู้ที่ไม่ได้ยืนยันสิทธิ์"},
+ links:['DPP แพ็ก (ขั้น 5)','DCC carbon (ขั้น 4)']});
+
+U.push({n:'C',t:'ขายรถมือสอง: ผู้ซื้อดูสุขภาพแบตก่อนตัดสินใจ',chip:'dte',whoLabel:'ผู้ใช้',who:'เจ้าของรถ มอบสิทธิ์ให้เต็นท์รถมือสอง',right:'ผู้มีส่วนได้เสีย · Annex XIII ข้อ 4 + มาตรา 14',when:'มิ.ย. 2574',head:USE_H,
+ desc:'กฎหมายให้ผู้ซื้อแบตหรือผู้ที่ทำแทนเข้าถึง State of Health ได้ เพื่อประเมินมูลค่าคงเหลือ เจ้าของรถออก credential มอบสิทธิ์ให้เต็นท์รถ (จำกัดเวลา) เต็นท์รถเห็น SoH จำนวนรอบ และเหตุการณ์ผิดปกติ ที่ศูนย์บริการลงนามไว้ ไม่ต้องเชื่อคำบอกของผู้ขาย',
+ fields:[['State of Health','88%','DTE ModifyEvent ล่าสุด (ศูนย์บริการ)'],['ความจุคงเหลือ','66 kWh จาก 75 kWh','ค่าจาก BMS'],['รอบชาร์จเทียบเท่า','640 / 2,000 รอบ',''],['เหตุการณ์ผิดปกติ','อุณหภูมิเกิน 1 ครั้ง (ส.ค. 2572) · ไม่มีอุบัติเหตุ','negative events ตาม Annex XIII ข้อ 4'],['สถานะแบต','original','']],
+ jsonLabel:'ดู JSON สิทธิ์ที่เจ้าของมอบ + DTE ล่าสุด',
+ json:{"สิทธิ์ที่เจ้าของมอบ (ย่อ)":{"type":["VerifiableCredential","DelegatedAccessCredential"],"issuer":"did:key:z6Mk…owner","validUntil":"2031-06-30T23:59:59Z","credentialSubject":{"id":"did:web:usedcar-berlin.example","product":PROD_B,"accessRole":[ROLE('Owner')],"purpose":"residual value assessment"}},
+   "DTE ล่าสุด":vc('DigitalTraceabilityEvent',`https://vc.service-de.example/dte/soh-${SN}-2031`,{"type":["CredentialIssuer"],"id":"did:web:service-de.example","name":"EV Service Center GmbH (ตัวอย่าง)"},'2031-06-02T10:00:00Z',null,[{
+     "type":["ModifyEvent"],"eventDate":"2031-06-02T09:20:00Z","activityType":cls('inspecting','Inspecting','https://ref.gs1.org/cbv/BizStep','GS1 CBV BizStep'),
+     "modifiedProduct":[{"product":{"id":PROD_B,"itemNumber":SN},"disposition":"active"}],
+     "sensorData":[{"metric":{"id":"https://vocab.thdpp.example/metric/state-of-health","name":"State of Health"},"measure":[{"value":88,"unit":"P1"}]},{"metric":{"id":"https://vocab.thdpp.example/metric/remaining-capacity","name":"Remaining capacity"},"measure":[{"value":66,"unit":"KWH"}]},{"metric":{"id":"https://vocab.thdpp.example/metric/equivalent-full-cycles","name":"Equivalent full cycles"},"measure":[{"value":640,"unit":"C62"}]},{"metric":{"id":"https://vocab.thdpp.example/metric/negative-event","name":"Over-temperature events"},"measure":[{"value":1,"unit":"C62"}]}]
+   }])},
+ links:['DTE ModifyEvent (ขั้น 8)','DPP แพ็ก ID เดิม']});
+
+U.push({n:'D',t:'อู่อิสระเปลี่ยนโมดูลที่เสีย',chip:'dte',whoLabel:'ผู้ใช้',who:'อู่ซ่อม EV อิสระ (ไม่ใช่ศูนย์ของแบรนด์)',right:'ผู้มีส่วนได้เสีย · Annex XIII ข้อ 2',when:'มี.ค. 2575',head:USE_H,
+ desc:'อู่ยื่น credential ว่าเป็นผู้ซ่อมที่ขึ้นทะเบียน จึงเปิดข้อมูลถอดแยก part number และมาตรการความปลอดภัยได้ ทำให้ซ่อมได้โดยไม่ต้องพึ่งศูนย์ของแบรนด์ หลังซ่อมอู่ออก ModifyEvent บันทึกโมดูลที่เปลี่ยน ต่อท้ายประวัติโดยไม่ต้องแก้ DPP เดิม',
+ fields:[['ข้อมูลถอดแยก','exploded diagram · ลำดับถอด 14 ขั้น · ผังเซลล์ 12 โมดูล × 30 เซลล์','DPP relatedDocument "dismantling"'],['ตัวยึดและเครื่องมือ','สกรู M6 × 48 · กาวโครงสร้าง 2 จุด · ถุงมือฉนวน class 0',''],['Part number + ติดต่ออะไหล่','SEV-MOD-12S-60Ah · parts@siamev.example',''],['มาตรการความปลอดภัย','ถอดปลั๊กบริการ รอ 10 นาที วัดแรงดันให้ต่ำกว่า 60 V ก่อนเปิดฝา',''],['ผลซ่อม','เปลี่ยนโมดูล 7 · SoH หลังซ่อม 90%','DTE ใหม่ที่อู่ออก']],
+ jsonLabel:'ดู JSON DTE ที่อู่ออกหลังซ่อม',
+ json:vc('DigitalTraceabilityEvent',`https://vc.ev-repair.example/dte/repair-${SN}-2032`,{"type":["CredentialIssuer"],"id":"did:web:ev-repair.example","name":"Unabhängige EV-Werkstatt (ตัวอย่าง)"},'2032-03-15T16:00:00Z',null,[{
+   "type":["ModifyEvent"],"eventDate":"2032-03-15T14:10:00Z","activityType":cls('repairing','Repairing','https://ref.gs1.org/cbv/BizStep','GS1 CBV BizStep'),
+   "description":"Replaced module 7 (cell imbalance). Removed module returned for recycling.",
+   "modifiedProduct":[{"product":{"id":PROD_B,"itemNumber":SN},"disposition":"active"}],
+   "sensorData":[{"metric":{"id":"https://vocab.thdpp.example/metric/state-of-health","name":"State of Health"},"measure":[{"value":90,"unit":"P1"}]}]
+ }]),
+ links:['DPP relatedDocument "dismantling" (accessRole)','IDR เพิ่มลิงก์ dte']});
+
+U.push({n:'E',t:'ชีวิตที่สอง: นำไปทำระบบกักเก็บพลังงาน ต้องมี passport ใบใหม่',chip:'dpp',whoLabel:'ผู้ใช้',who:'SecondLife Storage GmbH',right:'ผู้มีส่วนได้เสีย (ข้อ 2, 4) → กลายเป็นผู้รับผิดชอบ',when:'พ.ศ. 2578',head:USE_H,
+ desc:'SoH ลดเหลือ 72% ไม่เหมาะกับรถแล้ว ผู้ประกอบการ second-life ใช้ SoH ประวัติเหตุการณ์ และข้อมูลถอดแยก ประเมินว่าคุ้มจะนำไปใช้เป็นแบตกักเก็บพลังงาน เมื่อนำไปวางตลาดใหม่ ผู้ประกอบการรายนี้ต้องออก passport ใบใหม่ที่ลิงก์กลับไปใบเดิม และรับผิดชอบข้อมูลต่อจากนี้ ส่วนใบเดิมบันทึกสถานะเป็น repurposed',
+ fields:[['ID ใหม่',PROD_SL,'GTIN ของผู้ประกอบการรายใหม่'],['หมวดใหม่','แบตอุตสาหกรรม (stationary storage) > 2 kWh','ยังต้องมี passport'],['batteryStatus','repurposed',''],['ลิงก์ใบเดิม',PROD_B,'relatedDocument linkType "original-passport"'],['สมรรถนะเริ่มต้น','SoH 72% · ใช้งานได้ 54 kWh',''],['ผู้รับผิดชอบ','did:web:secondlife.example','ไม่ใช่สยามอีวีเซลล์อีกต่อไป']],
+ jsonLabel:'ดู JSON DPP ใบใหม่',
+ json:vc('DigitalProductPassport','https://vc.secondlife.example/dpp/SL-ESS-2035-0091',SL,'2035-09-01T00:00:00Z','2045-09-01T00:00:00Z',{
+   "type":["Product"],"id":PROD_SL,"name":"Repurposed stationary storage module 54 kWh",
+   "idScheme":{"id":"https://www.gs1.org/standards/id-keys/gtin","name":"GS1 GTIN + serial"},"itemNumber":"SL-ESS-2035-0091","idGranularity":"item",
+   "productCategory":[cls('850760','Lithium-ion accumulators','https://www.wcoomd.org/en/topics/nomenclature.aspx','HS 2022')],
+   "relatedParty":[{"role":"manufacturer","party":{"type":["Party"],"id":SL.id,"name":SL.name}},{"role":"originalManufacturer","party":{"type":["Party"],"id":MFG.id,"name":MFG.name}}],
+   "characteristics":{"batteryCategory":"industrial battery (stationary)","batteryStatus":"repurposed","chemistry":"NMC811","usableCapacity":{"value":54,"unit":"KWH"},"stateOfHealth":{"value":72,"unit":"P1"}},
+   "relatedDocument":[{"linkURL":`https://vc.siamev.example/dpp/${SN}`,"linkName":"Original battery passport","linkType":"https://vocab.thdpp.example/linkTypes/original-passport"},{"linkURL":"https://vc.secondlife.example/dte/repurpose-SL-ESS-2035-0091","linkName":"Repurposing event","linkType":"https://test.uncefact.org/vocabulary/linkTypes/dte"}]
+ }),
+ links:['DPP แพ็กเดิม (ขั้น 5) → สถานะ repurposed','DTE ตลอดอายุ (ขั้น 8, C, D)']});
+
+U.push({n:'F',t:'รีไซเคิล แล้ว passport สิ้นสุด',chip:'dte',whoLabel:'ผู้ใช้',who:'โรงรีไซเคิล (EU)',right:'ผู้มีส่วนได้เสีย · Annex XIII ข้อ 2',when:'พ.ศ. 2585',head:USE_H,
+ desc:'เมื่อหมดอายุ แบตมีสถานะ waste โรงรีไซเคิลใช้องค์ประกอบละเอียดของ cathode, anode, electrolyte เลือกกระบวนการ และใช้ข้อมูลถอดแยกเพื่อความปลอดภัย ผลที่ได้คือ black mass ล็อตใหม่ ที่ผู้ผลิตแบตรุ่นถัดไปอ้างเป็น recycled content ได้ หลังรีไซเคิลแล้ว passport ของแบตก้อนนี้สิ้นสุด resolver ตอบว่าถูกรีไซเคิลแล้ว แทนที่จะหายไปเฉย ๆ',
+ fields:[['องค์ประกอบ cathode','LiNi0.8Mn0.1Co0.1O2 (NMC811)','DPP ข้อ 2 (accessRole: Recycler)'],['anode · electrolyte','graphite · LiPF6 ใน EC/EMC',''],['output','black mass 310 กก. (Ni, Co, Li)','DTE MakeEvent'],['สถานะ passport','ceased · reason: recycled','ทั้งใบเดิมและใบ second-life'],['ต่อไปข้างหน้า','black mass lot → recycled content ของแบตใหม่','DPP ใหม่อ้าง ID ล็อตนี้ใน materialProvenance']],
+ jsonLabel:'ดู JSON DTE รีไซเคิล + คำตอบของ resolver',
+ json:{"DTE":vc('DigitalTraceabilityEvent','https://vc.recycler-eu.example/dte/recycle-SL-ESS-2035-0091',{"type":["CredentialIssuer"],"id":"did:web:recycler-eu.example","name":"EU Battery Recycling SA (ตัวอย่าง)"},'2042-04-20T12:00:00Z',null,[{
+     "type":["MakeEvent"],"eventDate":"2042-04-18T08:00:00Z","activityType":cls('disassembling','Disassembling','https://ref.gs1.org/cbv/BizStep','GS1 CBV BizStep'),
+     "inputProduct":[{"product":{"id":PROD_SL,"name":"Repurposed storage module (original "+SN+")"},"quantity":{"value":1,"unit":"H87"},"disposition":"destroyed"}],
+     "outputProduct":[{"product":{"id":"https://id.recycler-eu.example/blackmass/BM-2042-0417","name":"Black mass NMC","batchNumber":"BM-2042-0417"},"quantity":{"value":310,"unit":"KGM"},"disposition":"new"}]
+   }]),
+   "resolver หลังรีไซเคิล (แนวคิด)":{"status":410,"anchor":PROD_B,"passportStatus":"ceased","reason":"recycled","successorPassport":PROD_SL,"recyclingEvent":"https://vc.recycler-eu.example/dte/recycle-SL-ESS-2035-0091"}},
+ links:['DPP ใบ second-life (E)','DPP ใบเดิม (ขั้น 5)','recycled content ของแบตรุ่นถัดไป']});
+
+/* ---------------- Battery Pass-Ready (Data Attribute Longlist v2.0 · User Stories v1.0 · EN 18222) ---------------- */
+const BPR_CATS=[
+ ['DPP header','dppHeader',9,7,2,2,0,'IDR · DID ผู้ออก · DFR (facilityId)'],
+ ['Identifiers and product data','identifiersAndProductData',13,10,3,1,0,'DPP แพ็ก: characteristics, relatedParty'],
+ ['Symbols, labels, conformity','symbolsLabelsAndDocumentationOfConformity',7,6,1,0,1,'DPP relatedDocument + DCC UN 38.3'],
+ ['Battery carbon footprint','batteryCarbonFootprint',8,8,0,0,8,'DCC carbon footprint (แท็บแบต ขั้น 4)'],
+ ['Supply chain due diligence','supplyChainDueDiligence',3,3,0,0,3,'DCC due diligence ใน DPP เซลล์ (ขั้น 2)'],
+ ['Materials and composition','batteryMaterialsAndComposition',4,3,1,0,0,'DPP materialProvenance + DPP เซลล์'],
+ ['Circularity and resource efficiency','circularityAndResourceEfficiency',12,8,4,0,4,'DPP claim recycled content + relatedDocument ถอดแยก'],
+ ['Performance and durability','performanceAndDurability',36,17,19,14,5,'static: DPP characteristics + DCC ผลทดสอบ · dynamic: DTE ModifyEvent / BMS']];
+document.getElementById('dl-bpr-cats').innerHTML=BPR_CATS.map(c=>`<tr><td><b>${c[0]}</b><br><code>${c[1]}</code></td><td>${c[2]}</td><td>${c[3]}</td><td>${c[4]}</td><td>${c[5]}</td><td>${c[6]||'—'}</td><td class="n">${esc(c[7])}</td></tr>`).join('')+
+ `<tr><td><b>รวม</b></td>${[2,3,4,5,6].map(i=>`<td><b>${BPR_CATS.reduce((a,c)=>a+c[i],0)}</b></td>`).join('')}<td></td></tr>`;
+
+const MSP_API='https://dpp.thprovider.example/api/v1';
+const DPPID=v=>`https://dpp.thprovider.example/dpp/7c1e9a52-${SN}-v${v}`;
+const EO_ID='https://id.gs1.org/417/8857654320002', BSP_ID='https://id.gs1.org/417/4012345000009';
+const REG_ID='EU-DPPREG-2027-000041827';
+const RES=(url,title,ct='application/pdf')=>({"contentType":ct,"url":url,"language":"en","resourceTitle":title});
+const PCT=v=>({"percentageValue":v,"percentUnit":"%"});
+const TOKEN=(sub,scope,via)=>({"iss":"https://auth.thprovider.example","sub":sub,"aud":MSP_API,"scope":scope,"authn":via,"exp":"+15 นาที"});
+const DBP={
+ "dppHeader":{"dppSchemaVersion":"EN 18223:2026 · BatteryPass-Ready Data Model v2.0","dppStatus":{"dppStatusValue":"active"},"granularity":{"dppGranularityValue":"item"},"lastUpdated":"2027-02-10T11:00:00Z","digitalProductPassportId":DPPID(1),"uniqueProductIdentifier":PROD_B,"economicOperatorId":EO_ID,"facilityId":"https://id.gs1.org/414/8857654320006","contentSpecificationIds":["EU-2023/1542-AnnexXIII","BatteryPass-Ready-Longlist-2.0"]},
+ "identifiersAndProductData":{"batteryModelIdentifier":"SEV-NMC811-75","batterySerialNumber":SN,"uniqueManufacturerIdentifier":EO_ID,"thirdPartyServiceProvider":"DPP provider ไทย (ตัวอย่าง)",
+   "economicOperatorInformation":{"name":"Siam EV Cell Co., Ltd. (ตัวอย่าง)","registeredTradeNameOrRegisteredTrademark":"SIAMEV","postalAddress":"Pluak Daeng, Rayong 21140, TH","webAddress":"https://siamev.example","eMailAddress":"dpp@siamev.example"},
+   "manufacturingPlace":"Pluak Daeng, Rayong, Thailand","manufacturingDate":"2027-02","warrantyPeriod":"P8Y","batteryCategory":{"batteryCategoryValue":"electric vehicle battery"},"batteryMass":{"gramKilogramValue":450,"gramKilogramUnit":"kg"},"batteryStatus":{"batteryStatusValues":"original"}},
+ "symbolsLabelsAndDocumentationOfConformity":{"separateCollectionSymbol":RES('https://docs.siamev.example/labels/wee-bin.svg','Separate collection symbol','image/svg+xml'),"extinguishingAgent":{"extinguishingAgent":"Water, large quantities"},"meaningOfLabelsAndSymbols":"Crossed-out wheeled bin: collect separately …","euDeclarationOfConformity":RES('https://docs.siamev.example/SEV-NMC811-75/eu-doc.pdf','EU declaration of conformity'),"resultsOfTestReportsProvingCompliance":RES('https://docs.siamev.example/SEV-NMC811-75/test-reports.pdf','Test reports (authorities only)')},
+ "batteryCarbonFootprint":{"batteryCarbonFootprintPerFunctionalUnit":{"kgCO2EquivalentPerKilowattHourValue":61.5,"kgCO2EquivalentPerKilowattHourUnit":"kgCO2e/kWh"},"contributionOfRawMaterialAcquisitionAndPreProcessingLifecycleStage":{"kgCO2EquivalentPerKilowattHourValue":38.2},"contributionOfMainProductProductionLifecycleStage":{"kgCO2EquivalentPerKilowattHourValue":19.1},"ContributionOfDistributionLifecycleStage":{"kgCO2EquivalentPerKilowattHourValue":1.4},"ContributionOfEndOfLifeAndRecyclingLifecycleStage":{"kgCO2EquivalentPerKilowattHourValue":2.8},"webLinkToPublicCarbonFootprintStudy":"https://vc.verifier-eu.example/cf/SEV-NMC811-75-rayong/public"},
+ "supplyChainDueDiligence":{"informationOfDueDiligenceReport":RES('https://docs.siamev.example/due-diligence-2026.pdf','Due diligence report 2026')},
+ "batteryMaterialsAndComposition":{"batteryChemistry":{"chemicalCodeValue":"Li-ion NMC"},"criticalRawMaterials":["Lithium","Nickel","Cobalt","Manganese","Natural graphite"],"materialsUsedinCathodeAnodeAndElectrolyte":["Cathode: LiNi0.8Mn0.1Co0.1O2","Anode: graphite","Electrolyte: LiPF6 in EC/EMC"],"hazardousSubstancesAndTheirImpact":[{"chemicalName":"Lithium hexafluorophosphate","identifierType":"CAS","identifier":"21324-40-3","substanceLocation":"electrolyte"}]},
+ "circularityAndResourceEfficiency":{"dismantlingInformation":RES('https://docs.siamev.example/SEV-NMC811-75/dismantling.pdf','Dismantling manual'),"partNumbersForComponents":RES('https://docs.siamev.example/SEV-NMC811-75/parts.json','Part numbers','application/json'),"safetyMeasures":RES('https://docs.siamev.example/SEV-NMC811-75/safety.pdf','Safety measures'),"cobaltRecycledContentShare":PCT(12),"lithiumRecycledContentShare":PCT(5),"nickelRecycledContentShare":PCT(4),"renewableContentShare":PCT(3)},
+ "performanceAndDurability":{"ratedCapacity":{"amperehourMiliamperehourValue":188,"amperehourMiliamperehourUnit":"Ah"},"certifiedUsableBatteryEnergy":{"kilowattHourValue":72.0,"kilowattHourUnit":"kWh"},"nominalVoltage":{"voltValue":400,"voltUnit":"V"},"minimumVoltage":{"voltValue":300,"voltUnit":"V"},"maximumVoltage":{"voltValue":450,"voltUnit":"V"},"expectedLifetimeNumberofChargeDischargeCycles":2000,"cycleLifeReferenceTest":"IEC 62660-1","capacityThresholdForExhaustion":PCT(70),"temperatureRangeIdleStateLowerBoundary":{"celsiusValue":-20},"temperatureRangeIdleStateUpperBoundary":{"celsiusValue":45},
+   "stateOfCertifiedEnergy":PCT(100),"capacityFade":PCT(0),"numberOfFullChargingAndDischargingCycles":0,"numberofDeepDischargeEvents":0,"numberOfOverchargeEvents":0}
+};
+const BR_H=['ข้อมูล','ค่าตัวอย่าง','หมายเหตุ'], TS='Test environment ตรวจ (failure scenario → ผลที่ถูกต้อง)';
+const BR=[];
+BR.push({n:1,t:'รวบรวมข้อมูล 92 attribute แล้วแปลงเป็น battery passport รูปแบบ EU',chip:'dpp',who:'สยามอีวีเซลล์ + DPP provider ไทย (translator)',when:'ก่อนวางตลาด · ต่อแบตหนึ่งก้อน',head:BR_H,
+ desc:'ข้อมูลกระจายอยู่ใน UNTP credential ของระบบไทย (DPP แพ็ก, DCC carbon, DPP เซลล์, DFR โรงงาน) MSP แปลงเป็น JSON ตาม BatteryPass-Ready data model: ส่วนหัว dppHeader ตาม EN 18223 และข้อมูล 8 หมวด แต่ละ attribute ติดป้ายสิทธิ์ (สาธารณะ / ผู้มีส่วนได้เสีย / หน่วยงาน) เพื่อให้ API กรองได้ทีละฟิลด์',
+ fields:[['dppHeader.granularity','item','แบตต้องเป็นรายก้อนเท่านั้น'],['dppHeader.dppStatus','active',''],['uniqueProductIdentifier',PROD_B,'ตาม EN 18219 · อยู่ใน QR'],['digitalProductPassportId',DPPID(1),'เปลี่ยนทุกครั้งที่อัปเดตสำคัญ'],['batteryChemistry','Li-ion NMC','ต้องใช้คำตาม labelling IA'],['warrantyPeriod','P8Y','รูปแบบ ISO 8601 duration'],['batteryStatus','original','จำกัดสิทธิ์: เจ้าของ + MSA']],
+ checksHead:TS,checks:[['ขาดฟิลด์บังคับ หรือรูปแบบผิด (เช่น manufacturingDate ไม่ใช่ YYYY-MM)','แจ้งข้อผิดพลาด'],['granularity ไม่ใช่ item','ปฏิเสธ'],['ข้อมูลจำกัดสิทธิ์ติดป้ายเป็นสาธารณะ','ต้องตรวจพบ']],
+ jsonLabel:'ดู JSON battery passport (ย่อ ตาม longlist v2.0)',json:DBP,
+ links:['DPP แพ็ก (แท็บแบต ขั้น 5)','DCC carbon (ขั้น 4)','DPP เซลล์ (ขั้น 2)','DFR โรงงาน (ขั้น 1)']});
+
+BR.push({n:2,t:'ลงทะเบียนตัวตนกับ EC Registry และมอบสิทธิ์ให้ MSP',chip:'doc',who:'EO · MSP',when:'ครั้งเดียว · สถานะ verified อยู่ได้ถึง 3 ปี',head:BR_H,
+ desc:'ก่อนลงทะเบียน passport ใบแรก EO และ MSP ต้องยืนยันตัวตนกับ EC Registry ผ่าน eIDAS ด้วยลายมือชื่อหรือตราอิเล็กทรอนิกส์ที่มีคุณสมบัติ (qualified e-signature / e-seal) หรือ eID ระดับ high แล้วตั้งโปรไฟล์ จากนั้น EO มอบสิทธิ์ให้ MSP ลงทะเบียนแทน ผู้ประกอบการไทยที่ไม่มีนิติบุคคลใน EU ต้องดูว่าใครเป็นคนยืนยันตัวตนตรงนี้',
+ fields:[['วิธียืนยันตัวตน','eIDAS · qualified e-seal','ต้องใช้ผู้ให้บริการที่ EU ยอมรับ'],['สถานะ','verified Economic Operator','อายุไม่เกิน 3 ปี'],['โปรไฟล์','มีผู้ดูแลบัญชีอย่างน้อย 1 คน','ต้องอัปเดตให้เป็นปัจจุบัน'],['สิทธิ์ที่มอบ','MSP ลงทะเบียนแทน EO','ใช้ EO ID ในคำขอเสมอ']],
+ checksHead:TS,checks:[['EO ยังไม่ผ่าน eIDAS แต่ทำรายการได้','ต้องปฏิเสธ'],['สถานะ verified หมดอายุแล้วยังใช้ได้','ต้องปฏิเสธ'],['MSP ไม่ได้รับสิทธิ์จาก EO แต่ลงทะเบียนได้','ต้องปฏิเสธ']],
+ jsonLabel:'ดู JSON สิทธิ์ที่ EO มอบให้ MSP (แนวคิด)',
+ json:{"registryProfile":{"economicOperatorId":EO_ID,"verificationMethod":"qualified electronic seal","verifiedStatus":"verified","verifiedUntil":"2030-01-14","accountHolders":1},"accessGrant":{"grantedBy":EO_ID,"grantedTo":"https://id.gs1.org/417/8850000123456","role":"MainServiceProvider","scope":["RegisterProductDPP"]}},
+ links:['ขั้น 5 ลงทะเบียน']});
+
+BR.push({n:3,t:'EO ส่งข้อมูลให้ MSP สร้าง passport (CreateDPP)',chip:'dpp',who:'EO → MSP',when:'10 ก.พ. 2570',head:BR_H,
+ desc:'EO ยืนยันตัวตนกับ MSP ด้วย OAuth 2.0 แล้วส่ง payload ทั้งก้อนจากขั้น 1 ผ่าน CreateDPP MSP เก็บข้อมูล สร้าง passport แล้วตอบ DPP ID กลับ ถึงตรงนี้ passport มีแล้วแต่ยังไม่ได้ลงทะเบียน',
+ fields:[['API','CreateDPP · POST','EN 18222 Life Cycle API'],['ผลลัพธ์','201 SuccessCreated + DPP ID',''],['สถานะ','active · registration pending','']],
+ checksHead:TS,checks:[['token OAuth หมดอายุหรือปลอม','401 ClientNotAuthorized'],['ส่งแบตที่มี passport อยู่แล้วซ้ำ','409 ClientResourceConflict'],['payload ผิด schema','400 ClientErrorBadRequest']],
+ jsonLabel:'ดู JSON คำขอและคำตอบ',
+ json:{"request":{"method":"CreateDPP","http":"POST",url:`${MSP_API}/dpps`,"authorization":"Bearer <OAuth 2.0 token ของ EO>","body":"<battery passport จากขั้น 1>"},"response":{"statusCode":"SuccessCreated","http":201,"digitalProductPassportId":DPPID(1)}},
+ links:['ขั้น 1 payload','ขั้น 4 backup']});
+
+BR.push({n:4,t:'MSP สร้างสำเนาสำรองที่ Backup Service Provider',chip:'dfr',who:'MSP → BSP',when:'10 ก.พ. 2570 · ต้องเสร็จก่อนลงทะเบียน',head:BR_H,
+ desc:'กฎหมายให้มีสำเนาสำรองกับผู้ให้บริการอีกราย เพื่อให้ passport ยังเปิดได้ถ้า EO หรือ MSP ปิดกิจการ MSP ยืนยันตัวตนกับ BSP ด้วย OAuth 2.0 แล้วเรียก CreateDPP อีกครั้งไปที่ BSP BSP ตอบ DPP ID เดิมกลับเป็นหลักฐาน Registry จะตรวจลิงก์ backup นี้ในขั้นถัดไป',
+ fields:[['API','CreateDPP · POST ไปที่ BSP',''],['หลักฐาน','DPP ID เดียวกับขั้น 3','ต้องตรงกัน'],['backup operator ID',BSP_ID,'ใส่ใน DppRegistryEntry']],
+ checksHead:TS,checks:[['ลงทะเบียนโดยยังไม่มี backup','ต้องปฏิเสธ'],['BSP ตอบสำเร็จแต่ไม่ได้เก็บจริง / เก็บข้อมูลผิดก้อน','ต้องตรวจพบ'],['ส่งคำขอเดิมซ้ำแล้วเกิดสำเนาซ้ำ','ต้องไม่ซ้ำ']],
+ jsonLabel:'ดู JSON คำตอบของ BSP',
+ json:{"request":{"method":"CreateDPP","http":"POST","url":"https://backup.eu-bsp.example/api/v1/dpps","authorization":"Bearer <OAuth 2.0 token ของ MSP>"},"response":{"statusCode":"SuccessCreated","http":201,"digitalProductPassportId":DPPID(1),"backupStatus":"active"}},
+ links:['ขั้น 5 Registry ตรวจ backup link']});
+
+BR.push({n:5,t:'ลงทะเบียนกับ EC Registry (RegisterProductDPP) = วางตลาดได้',chip:'doc',who:'MSP แทน EO → EC Registry',when:'12 ก.พ. 2570',head:BR_H,
+ desc:'ส่งแค่ DppRegistryEntry 5 ค่า พร้อมตราอิเล็กทรอนิกส์ ไม่ส่งเนื้อหา passport ถ้าส่งข้อมูลเกินกว่าที่กำหนด Registry ปฏิเสธ Registry ตรวจอัตโนมัติ 5 ข้อ ผ่านแล้วออก Registration ID ซึ่งใช้ตอนผ่านศุลกากร แต่ไม่ใส่กลับเข้าไปใน passport ขอหลักฐานการลงทะเบียนแบบประทับตราได้ภายใน 90 วัน',
+ fields:[['uniqueProductIdentifier',PROD_B,''],['digitalProductPassportId',DPPID(1),''],['uniqueEconomicOperatorIdentifier',EO_ID,'เป็นของ EO ไม่ใช่ MSP'],['uniqueEOIdentifierBackupOperator',BSP_ID,''],['dppApiEndpoint',MSP_API,'ต้องเรียกได้จริง'],['ผลลัพธ์',REG_ID,'Registration ID']],
+ checksHead:'EC Registry ตรวจอัตโนมัติ 5 ข้อ',checks:[['ข้อมูลบังคับครบและถูกต้อง','✓'],['ระดับ granularity ถูก (item)','✓'],['รหัสสินค้า (commodity code) ถูก','✓'],['ลิงก์ backup เปิด passport ได้','✓'],['ตราอิเล็กทรอนิกส์ (qualified seal) ถูกต้อง','✓']],
+ jsonLabel:'ดู JSON DppRegistryEntry และคำตอบ',
+ json:{"request":{"method":"RegisterProductDPP","http":"POST","signature":"qualified e-seal ของ MSP (ทำแทน EO)","dppRegistryEntry":{"uniqueProductIdentifier":PROD_B,"digitalProductPassportId":DPPID(1),"uniqueEconomicOperatorIdentifier":EO_ID,"uniqueEOIdentifierBackupOperator":BSP_ID,"dppApiEndpoint":MSP_API}},"response":{"statusCode":"SuccessCreated","http":201,"registrationId":REG_ID},"proofOfRegistration (ทางเลือก)":{"type":"sealed electronic document","seal":"qualified seal + timestamp","availableForDays":90}},
+ links:['ขั้น 3, 4','ศุลกากร EU ใช้ Registration ID']});
+
+BR.push({n:6,t:'คนทั่วไปสแกน QR อ่านข้อมูลสาธารณะ',chip:'dpp',who:'ผู้ซื้อรถ (public user)',when:'ตลอดอายุแบต',head:BR_H,
+ desc:'QR บนแบตมี product ID และ URL มือถือเปิด URL แล้ว MSP ตอบหน้า HTML ที่อ่านง่ายบนมือถือ ไม่ต้องยืนยันตัวตน ใช้ได้ทั้งคนใน EU และนอก EU ระบบต้องแยกข้อมูลสาธารณะออกจากข้อมูลจำกัดสิทธิ์ให้ขาด',
+ fields:[['ช่องทาง','QR → HTTPS → HTML','ไม่ต้อง login'],['เห็น','62 attribute สาธารณะ','เช่น เคมี ความจุ น้ำหนัก carbon footprint recycled content'],['ไม่เห็น','30 attribute จำกัดสิทธิ์','เช่น batteryStatus, SoH, cathode detail']],
+ checksHead:TS,checks:[['QR ไม่ redirect ไปหน้าที่ถูกต้อง','ต้องตรวจพบ'],['หน้าเว็บขอ login ก่อนดูข้อมูลสาธารณะ','ไม่ผ่าน'],['ข้อมูลจำกัดสิทธิ์หลุดมาในหน้าสาธารณะ','ไม่ผ่าน']],
+ jsonLabel:'ดู JSON ส่วนที่คนทั่วไปได้รับ (ย่อ)',
+ json:{"request":{"http":"GET","url":PROD_B,"authorization":"ไม่มี","accept":"text/html"},"publicView (ย่อ)":{"batteryModelIdentifier":"SEV-NMC811-75","manufacturingDate":"2027-02","batteryCategory":"electric vehicle battery","batteryMass":"450 kg","batteryChemistry":"Li-ion NMC","certifiedUsableBatteryEnergy":"72.0 kWh","batteryCarbonFootprintPerFunctionalUnit":"61.5 kgCO2e/kWh","cobaltRecycledContentShare":"12 %","euDeclarationOfConformity":"https://docs.siamev.example/SEV-NMC811-75/eu-doc.pdf"},"ไม่อยู่ในคำตอบ":["batteryStatus","materialsUsedinCathodeAnodeAndElectrolyte","dismantlingInformation","stateOfCertifiedEnergy","resultsOfTestReportsProvingCompliance"]},
+ links:['ขั้น 1 ฟิลด์ public']});
+
+BR.push({n:7,t:'หน่วยงานกำกับตลาดอ่านข้อมูลควบคุม',chip:'dcc',who:'MSA / ศุลกากร (authority)',when:'ตอนนำเข้า มี.ค. 2570',head:BR_H,
+ desc:'หน่วยงานยืนยันตัวตนกับ MSP ด้วย eIDAS ได้ token ที่ระบุบทบาท แล้วเลือกฟังก์ชันอ่าน 1 ใน 4 แบบ คำตอบมีข้อมูลสาธารณะรวมกับฟิลด์ควบคุมที่บทบาทนั้นเห็นได้ ฟิลด์ที่ไม่มีสิทธิ์ถูกตัดออก อ่านด้วย product ID ได้เวอร์ชัน active ส่วนอ่านด้วย DPP ID ได้เวอร์ชันนั้นตรง ๆ แม้ถูก archive แล้ว',
+ fields:[['readDPPById','GET · DPP ID','ได้เวอร์ชันที่ระบุ แม้ archived'],['readDPPByProductId','GET · product ID','ได้เวอร์ชัน active'],['readDPPVersionByIdAndDate','GET · ID + เวลา','ดูย้อนหลัง'],['readDataElement','GET · DPP ID + path','ขอทีละฟิลด์'],['สิ่งที่ MSA เห็นเพิ่ม','test reports · economicOperatorId · facilityId · batteryStatus','']],
+ checksHead:TS,checks:[['ไม่มี token แต่ได้ข้อมูลควบคุม','401'],['token บทบาทอื่นขอฟิลด์ที่ไม่มีสิทธิ์','403 หรือตัดฟิลด์ออก'],['path ของฟิลด์ไม่มีอยู่','404 ClientErrorResourceNotFound']],
+ jsonLabel:'ดู JSON token และคำตอบ readDataElement',
+ json:{"token (claims ย่อ)":TOKEN('did:web:msa-nl.example','dpp:read authority','eIDAS'),"request":{"method":"readDataElement","http":"GET","url":`${MSP_API}/dpps/${encodeURIComponent(DPPID(1))}/elements/symbolsLabelsAndDocumentationOfConformity.resultsOfTestReportsProvingCompliance`},"response":{"statusCode":"Success","http":200,"dataElement":RES('https://docs.siamev.example/SEV-NMC811-75/test-reports.pdf','Test reports (authorities only)')}},
+ links:['ขั้น 5 Registration ID','ขั้น 1 ฟิลด์ authority']});
+
+BR.push({n:8,t:'ค้นหา passport จากรายการแบต (ReadDPPIdsByProductIds)',chip:'doc',who:'ผู้ให้บริการกองรถ (third party ที่ EO มอบสิทธิ์)',when:'เมื่อต้องการ',head:BR_H,
+ desc:'ใช้เมื่อมี battery ID หลายก้อนแต่ยังไม่รู้ DPP ID ส่ง POST พร้อมรายการ ID ได้คืนแค่ DPP ID ไม่ได้เนื้อหา แต่เพราะเปิดเผยความเชื่อมโยงระหว่าง ID จึงต้องยืนยันตัวตนและมีสิทธิ์ค้นหา ผลที่ได้เอาไปอ่านต่อด้วยขั้น 7 รองรับการแบ่งหน้าด้วย limit และ cursor',
+ fields:[['API','ReadDPPIdsByProductIds · POST',''],['input','productIds[] · limit · cursor','cursor ต้องไม่ว่าง ถ้าส่งมา'],['output','DPP IDs เท่านั้น','']],
+ checksHead:TS,checks:[['ค้นหาโดยไม่ยืนยันตัวตน','401'],['cursor ว่าง','400'],['คำตอบมีเนื้อหา passport ติดมาด้วย','ไม่ผ่าน']],
+ jsonLabel:'ดู JSON คำขอและคำตอบ',
+ json:{"token (claims ย่อ)":TOKEN('fleet-ops.example','dpp:search','OAuth 2.0 / OIDC'),"request":{"method":"ReadDPPIdsByProductIds","http":"POST","body":{"productIds":[PROD_B,`${MODEL_B}/21/SEV75-2027-000419`],"limit":50}},"response":{"statusCode":"Success","http":200,"digitalProductPassportIds":[DPPID(1),`https://dpp.thprovider.example/dpp/7c1e9a52-SEV75-2027-000419-v1`],"cursor":null}},
+ links:['ขั้น 7 อ่านต่อด้วย DPP ID']});
+
+BR.push({n:9,t:'อู่อิสระซ่อมแล้วอัปเดต passport → ได้เวอร์ชันใหม่',chip:'dte',who:'อู่ซ่อม (third party · OAuth 2.0) → MSP → BSP',when:'มี.ค. 2575',head:BR_H,
+ desc:'อู่สแกน QR ดูข้อมูลสาธารณะก่อน แล้วขอ token ที่มีสิทธิ์อ่านข้อมูลถอดแยกกับ part number และสิทธิ์เขียนเฉพาะบางฟิลด์ ซ่อมเสร็จส่ง PATCH ถ้าผ่านการตรวจสิทธิ์ ระบบสร้าง passport เวอร์ชันใหม่พร้อม DPP ID ใหม่ เวอร์ชันเดิมกลายเป็น archived แล้ว MSP ส่งสำเนาใหม่ไป BSP ซึ่ง archive สำเนาเก่าให้ DIN DKE SPEC 99100 แนะนำให้บันทึกการซ่อมเป็น repaired ภายใต้สถานะ re-used',
+ fields:[['อ่านก่อนซ่อม','dismantlingInformation · partNumbersForComponents · safetyMeasures','สิทธิ์ผู้มีส่วนได้เสีย'],['API','UpdateDPPById หรือ UpdateDataElement · PATCH',''],['เวอร์ชันใหม่',DPPID(2),'active'],['เวอร์ชันเดิม',DPPID(1),'archived · อ่านย้อนหลังได้'],['ค่าที่เปลี่ยน','batteryStatus: re-used (repaired) · SoCE 90% · capacityFade 10%',''],['backup','BSP: สำเนา v2 active, v1 archived','']],
+ checksHead:TS,checks:[['อู่เขียนฟิลด์นอกสิทธิ์ (เช่น carbon footprint)','403 ทั้งคำขอ'],['อัปเดต passport ที่ไม่ใช่ active','ปฏิเสธ'],['อัปเดตแล้วไม่สร้าง DPP ID ใหม่ / เวอร์ชันเดิมไม่ถูก archive','ไม่ผ่าน'],['อัปเดตแล้วไม่ได้สำรองเวอร์ชันใหม่','ไม่ผ่าน']],
+ jsonLabel:'ดู JSON PATCH และคำตอบ',
+ json:{"token (claims ย่อ)":TOKEN('did:web:ev-repair.example','dpp:read circularity dpp:write batteryStatus performanceAndDurability.dynamic','OAuth 2.0 / OIDC'),"request":{"method":"UpdateDPPById","http":"PATCH","url":`${MSP_API}/dpps/${encodeURIComponent(DPPID(1))}`,"body":{"identifiersAndProductData":{"batteryStatus":{"batteryStatusValues":"re-used"}},"performanceAndDurability":{"stateOfCertifiedEnergy":PCT(90),"capacityFade":PCT(10),"numberOfFullChargingAndDischargingCycles":702}}},"response":{"statusCode":"Success","http":200,"dppHeader":{"digitalProductPassportId":DPPID(2),"dppStatus":{"dppStatusValue":"active"},"lastUpdated":"2032-03-15T14:30:00Z"},"previousVersion":{"digitalProductPassportId":DPPID(1),"dppStatus":{"dppStatusValue":"archived"}}},"backup":{"method":"CreateDPP","http":201,"active":DPPID(2),"archived":DPPID(1)}},
+ links:['ขั้น 6 QR','แท็บแบต: DTE ModifyEvent (หลักฐานการซ่อม)']});
+
+BR.push({n:10,t:'ผู้รีไซเคิลอ่านองค์ประกอบ แล้วตั้งสถานะ waste + marked-for-deletion',chip:'dte',who:'โรงรีไซเคิล (regulated base role · eIDAS)',when:'พ.ศ. 2585',head:BR_H,
+ desc:'ผู้รีไซเคิลได้สิทธิ์ตามบทบาทที่กฎหมายรับรอง ไม่ต้องขอจาก EO ทีละราย อ่านองค์ประกอบ cathode, anode, electrolyte และข้อมูลความปลอดภัย แล้วอัปเดตสถานะ ผู้ที่ตั้ง marked-for-deletion ได้มีแค่ผู้รีไซเคิลกับ EO หลังจากนี้ passport ถูกแช่แข็ง แก้ไขหรือสร้าง DPP ID ใหม่ไม่ได้ ทางเลือก: ถ้านำแบตไป repurpose แทน จะเกิด passport ใบใหม่ และใบเดิมเป็น inactive',
+ fields:[['อ่าน','materialsUsedinCathodeAnodeAndElectrolyte · safetyMeasures','สิทธิ์ผู้รีไซเคิล'],['batteryStatus','waste',''],['dppStatus','marked-for-deletion','แก้ไขต่อไม่ได้'],['ทางเลือก repurpose','passport ใหม่ · ใบเดิม inactive','ดูตัวอย่าง E ในแท็บแบต']],
+ checksHead:TS,checks:[['ผู้ซ่อม (ไม่ใช่ผู้รีไซเคิล) ตั้ง marked-for-deletion','403'],['อัปเดต passport ที่ marked-for-deletion แล้ว','ปฏิเสธ']],
+ jsonLabel:'ดู JSON การอัปเดตสถานะ',
+ json:{"token (claims ย่อ)":TOKEN('did:web:recycler-eu.example','dpp:read materials dpp:write batteryStatus dppStatus','eIDAS (regulated role: recycler)'),"request":{"method":"UpdateDPPById","http":"PATCH","url":`${MSP_API}/dpps/${encodeURIComponent(DPPID(2))}`,"body":{"dppHeader":{"dppStatus":{"dppStatusValue":"marked-for-deletion"}},"identifiersAndProductData":{"batteryStatus":{"batteryStatusValues":"waste"}}}},"response":{"statusCode":"Success","http":200,"digitalProductPassportId":DPPID(3),"dppStatus":"marked-for-deletion"}},
+ links:['ขั้น 11 ลบ','แท็บแบต: DTE รีไซเคิล (F)']});
+
+BR.push({n:11,t:'ลบ passport และแจ้ง EC Registry',chip:'doc',who:'EO / MSP → BSP → EC Registry',when:'หลังรีไซเคิล',head:BR_H,
+ desc:'ลบได้เฉพาะ passport ที่ marked-for-deletion และเฉพาะ EO/MSP เท่านั้น เริ่มที่ BSP ด้วย DeleteDPPById เมื่อได้ 200 แล้ว MSP หยุดโฮสต์บนเครื่องตัวเอง QR และ API อ่านจะใช้ไม่ได้อีก การลบครอบคลุมทุกเวอร์ชันของแบตก้อนนี้ สุดท้ายแจ้ง Registry ผ่าน eIDAS ซึ่งยังเก็บข้อมูลการลงทะเบียนไว้ตรวจย้อนหลัง',
+ fields:[['API','DeleteDPPById · DELETE ที่ BSP','ต้องเป็น marked-for-deletion'],['ขอบเขต','v1 (archived) · v2 (archived) · v3 (marked-for-deletion)','ทุกเวอร์ชันของ battery ID นี้'],['หลังลบ','QR และ read API ใช้ไม่ได้',''],['EC Registry','รับแจ้งการลบ เก็บข้อมูลลงทะเบียนไว้',REG_ID]],
+ checksHead:TS,checks:[['ลบ passport ที่ยัง active','ต้องปฏิเสธ'],['คนที่ไม่ใช่ EO/MSP เรียก DELETE','403 / 405'],['ลบแล้วยังเปิดผ่าน QR ได้','ไม่ผ่าน']],
+ jsonLabel:'ดู JSON การลบและแจ้ง Registry',
+ json:{"deleteAtBsp":{"method":"DeleteDPPById","http":"DELETE","url":`https://backup.eu-bsp.example/api/v1/dpps/${encodeURIComponent(DPPID(3))}`,"response":{"statusCode":"Success","http":200}},"stopHosting":{"at":MSP_API,"activeVersion":null,"qrAccess":"terminated"},"registryNotification (แนวคิด)":{"registrationId":REG_ID,"uniqueProductIdentifier":PROD_B,"event":"passport deleted","channel":"eIDAS session"}},
+ links:['ขั้น 5 Registration ID','ขั้น 10']});
+
 /* ---------------- render steps ---------------- */
 const CV={dpp:'var(--dpp)',dfr:'var(--dfr)',dcc:'var(--dcc)',dte:'var(--dte)',doc:'var(--doc)'};
 const LB={dpp:'DPP',dfr:'DFR',dcc:'DCC',dte:'DTE',doc:'DOC'};
@@ -311,6 +512,9 @@ function renderSteps(list,el){
 }
 renderSteps(D,document.getElementById('dl-steps-durian'));
 renderSteps(B,document.getElementById('dl-steps-battery'));
+renderSteps(U,document.getElementById('dl-bp-uses'));
+renderSteps(BR,document.getElementById('dl-bpr-steps'));
+document.querySelectorAll('#data [data-jump]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.getElementById(a.dataset.jump).scrollIntoView({behavior:'smooth',block:'start'})}));
 
 /* ---------------- hub figures ---------------- */
 function hub(cfg){
@@ -363,6 +567,33 @@ document.getElementById('dl-fig-battery').innerHTML=hub({id:'b',cap:'DPP แพ�
   {d:'M818 436 L670 330',l:'movedProduct.id',lp:[790,372,'start']},
   {d:'M160 434 L160 330',l:'inputProduct (ล็อตเซลล์)',lp:[168,372,'start'],dash:true}
  ]});
+
+/* ---------------- Battery Pass-Ready architecture figure ---------------- */
+(function(){
+  const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const W=1100,H=450,mono='ui-monospace,Menlo,Consolas,monospace';
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" font-family="Mitr,sans-serif"><defs><marker id="abr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#5B6573"/></marker></defs><rect width="${W}" height="${H}" fill="#fff"/>`;
+  const box=(x,y,w,h,t,title,sub,strong)=>{const col=css('--'+t)||'#666';
+    s+=`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${strong?'#FFFBEA':'#fff'}" stroke="${col}" stroke-width="${strong?3:1.8}"/>`;
+    s+=`<text x="${x+14}" y="${y+26}" font-size="15" font-weight="600" fill="#1B2533">${esc(title)}</text>`;
+    sub.forEach((l,i)=>{s+=`<text x="${x+14}" y="${y+48+i*18}" font-size="12.5" fill="#667085">${esc(l)}</text>`});};
+  const arrow=(d,label,lp,dash,anc)=>{s+=`<path d="${d}" fill="none" stroke="#8A94A3" stroke-width="2" ${dash?'stroke-dasharray="6 5"':''} marker-end="url(#abr)"/>`;
+    if(label)s+=`<text x="${lp[0]}" y="${lp[1]}" font-size="12" font-family="${mono}" fill="#34445C" text-anchor="${anc||'middle'}" paint-order="stroke" stroke="#fff" stroke-width="5" stroke-linejoin="round">${esc(label)}</text>`;};
+  const users=[['Public user','สแกน QR · ไม่ต้องยืนยันตัวตน'],['Authorities (MSA, ศุลกากร)','eIDAS · อ่านข้อมูลควบคุม'],['Regulated roles (ผู้รีไซเคิล)','eIDAS · อ่าน + เขียนบางฟิลด์'],['Third parties (อู่ซ่อม, ลูกค้า)','OAuth 2.0 · สิทธิ์ตามที่ EO มอบ']];
+  const labels=['QR → HTML','read*','read / update','read / update'];
+  users.forEach((u,i)=>{const y=40+i*100;box(20,y,250,70,'dte',u[0],[u[1]]);arrow(`M272 ${y+35} L398 ${150+i*30}`,labels[i],[335,y+(i<2?44:30)],false)});
+  box(400,20,300,78,'dpp','Economic Operator',['สยามอีวีเซลล์ · ผู้รับผิดชอบ passport','สร้าง · มอบสิทธิ์ · ลบ']);
+  box(400,140,300,150,'dpp','Operational DPP service (MSP)',['โฮสต์ passport เวอร์ชัน active','Life Cycle API · Fine-granular API','  (EN 18222)','Access control ทีละฟิลด์ (EN 18239)','QR resolve → HTML สาธารณะ'],true);
+  box(820,40,260,100,'doc','EC Registry',['รับเฉพาะ DppRegistryEntry','ออก Registration ID','ไม่เก็บเนื้อหา passport']);
+  box(820,300,260,100,'dfr','Backup Service Provider',['สำเนาสำรอง + เวอร์ชันเก่า','ต้องทำก่อนลงทะเบียน','ผู้ให้บริการอิสระ']);
+  arrow('M550 100 L550 138','CreateDPP · OAuth 2.0',[558,124],false,'start');
+  arrow('M702 180 L818 100','RegisterProductDPP · eIDAS',[712,176],false,'start');
+  arrow('M702 260 L818 340','CreateDPP (backup)',[744,290],false,'start');
+  arrow('M950 142 L950 298','ตรวจ backup link',[958,224],true,'start');
+  s+=`<text x="400" y="330" font-size="12.5" fill="#667085">* ฟิลด์ที่เห็นขึ้นกับบทบาทใน token · ข้อมูลสาธารณะเห็นได้เสมอ</text>`;
+  s+='</svg>';
+  document.getElementById('dl-fig-bpready').innerHTML=s+`<div class="figcap">passport อยู่ที่ระบบของผู้ประกอบการ (หรือ MSP) Registry เป็นแค่ดัชนี Backup ต้องมีก่อนลงทะเบียน ผู้ใช้แต่ละกลุ่มยืนยันตัวตนต่างกัน ตามสมมติฐานของ BatteryPass-Ready User Stories v1.0</div>`;
+})();
 
 /* ---------------- tabs (no #hash: the hub uses it for page routing) ---------------- */
 const tabs=[...document.querySelectorAll('#data .dl-tabs button')], panels=[...document.querySelectorAll('#data [role=tabpanel]')];

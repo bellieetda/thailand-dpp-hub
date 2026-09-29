@@ -5,7 +5,7 @@
 ## หน้าในเว็บ
 1. ภาพรวม DPP
 2. แนวคิดและเทคนิค (UNTP, IDR, Thailand DPP Core)
-3. DPP Data Layer + ตัวอย่าง (DPP, DFR, DCC, DTE และ JSON ทีละขั้นของทุเรียนและแบตเตอรี่)
+3. DPP Data Layer + ตัวอย่าง (DPP, DFR, DCC, DTE และ JSON ทีละขั้นของทุเรียนและแบตเตอรี่ + ตัวอย่างการใช้งาน Battery Passport ตาม EU Battery Regulation + แท็บ Battery Pass-Ready: 11 ขั้นตาม User Stories และ Data Attribute Longlist v2.0)
 4. กรณีทุเรียน → จีน และแบตเตอรี่ → EU
 5. ขอบเขตงานตาม TOR
 6. Output และกิจกรรม (4.2–4.7: output ที่ต้องส่ง กิจกรรม วิธีทำ หลักฐาน สถานะ)
