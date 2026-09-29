@@ -16,11 +16,12 @@
   <div class="brand"><div class="dot">DPP</div><div><b>Thailand DPP</b><span>TOR70-DPP · ETDA</span></div></div>
   <a class="nl" href="#home"><span class="n">01</span>ภาพรวม DPP</a>
   <a class="nl" href="#concept"><span class="n">02</span>แนวคิดและเทคนิค</a>
-  <a class="nl" href="#cases"><span class="n">03</span>กรณีทุเรียน + แบตเตอรี่</a>
-  <a class="nl" href="#tor"><span class="n">04</span>ขอบเขตงานตาม TOR</a>
-  <a class="nl" href="#work"><span class="n">05</span>Output และกิจกรรม</a>
-  <a class="nl" href="#plan"><span class="n">06</span>แผนงาน 8 เดือน</a>
-  <a class="nl" href="#team"><span class="n">07</span>ทีมงานและผู้เกี่ยวข้อง</a>
+  <a class="nl" href="#data"><span class="n">03</span>DPP Data Layer + ตัวอย่าง</a>
+  <a class="nl" href="#cases"><span class="n">04</span>กรณีทุเรียน + แบตเตอรี่</a>
+  <a class="nl" href="#tor"><span class="n">05</span>ขอบเขตงานตาม TOR</a>
+  <a class="nl" href="#work"><span class="n">06</span>Output และกิจกรรม</a>
+  <a class="nl" href="#plan"><span class="n">07</span>แผนงาน 8 เดือน</a>
+  <a class="nl" href="#team"><span class="n">08</span>ทีมงานและผู้เกี่ยวข้อง</a>
   <div class="navfoot">ข้อมูลรวบรวมจากการหารือและร่าง TOR ลงวันที่ 24 ก.ย. 2569 แผนงานและทีมเป็นข้อเสนอสำหรับ Inception Report<div class="datasrc" id="datasrc"></div></div>
 </nav>
 <main>
@@ -61,11 +62,12 @@
   <h2>ในเว็บนี้มีอะไร</h2>
   <div class="grid3">
     <a class="card" href="#concept" style="text-decoration:none;color:inherit"><h3>02 แนวคิดและเทคนิค</h3><p>UNTP, credential 4 ชนิด, IDR และ link registry, สถาปัตยกรรม 6 ชั้น</p></a>
-    <a class="card" href="#cases" style="text-decoration:none;color:inherit"><h3>03 กรณีทุเรียน + แบตเตอรี่</h3><p>เส้นทางทีละขั้น และ component ที่แต่ละเส้นทางใช้</p></a>
-    <a class="card" href="#tor" style="text-decoration:none;color:inherit"><h3>04 ขอบเขตงานตาม TOR</h3><p>วัตถุประสงค์ 5 ข้อ และ 6 ขอบเขตงานหลัก</p></a>
-    <a class="card" href="#work" style="text-decoration:none;color:inherit"><h3>05 Output และกิจกรรม</h3><p>Output ที่ต้องส่ง กิจกรรม วิธีทำ และหลักฐานที่ติดตาม ราย 4.2–4.7</p></a>
-    <a class="card" href="#plan" style="text-decoration:none;color:inherit"><h3>06 แผนงาน 8 เดือน</h3><p>Gantt, WBS, สิ่งส่งมอบ, ความเสี่ยง</p></a>
-    <a class="card" href="#team" style="text-decoration:none;color:inherit"><h3>07 ทีมงานและผู้เกี่ยวข้อง</h3><p>บทบาททีม, RACI, หน่วยงานไทย–จีน–EU</p></a>
+    <a class="card" href="#data" style="text-decoration:none;color:inherit"><h3>03 DPP Data Layer + ตัวอย่าง</h3><p>โครงข้อมูล DPP, DFR, DCC, DTE และตัวอย่าง JSON ทีละขั้นของทุเรียนและแบตเตอรี่</p></a>
+    <a class="card" href="#cases" style="text-decoration:none;color:inherit"><h3>04 กรณีทุเรียน + แบตเตอรี่</h3><p>เส้นทางทีละขั้น และ component ที่แต่ละเส้นทางใช้</p></a>
+    <a class="card" href="#tor" style="text-decoration:none;color:inherit"><h3>05 ขอบเขตงานตาม TOR</h3><p>วัตถุประสงค์ 5 ข้อ และ 6 ขอบเขตงานหลัก</p></a>
+    <a class="card" href="#work" style="text-decoration:none;color:inherit"><h3>06 Output และกิจกรรม</h3><p>Output ที่ต้องส่ง กิจกรรม วิธีทำ และหลักฐานที่ติดตาม ราย 4.2–4.7</p></a>
+    <a class="card" href="#plan" style="text-decoration:none;color:inherit"><h3>07 แผนงาน 8 เดือน</h3><p>Gantt, WBS, สิ่งส่งมอบ, ความเสี่ยง</p></a>
+    <a class="card" href="#team" style="text-decoration:none;color:inherit"><h3>08 ทีมงานและผู้เกี่ยวข้อง</h3><p>บทบาททีม, RACI, หน่วยงานไทย–จีน–EU</p></a>
   </div>
   <div class="pager"><span></span><a href="#concept">แนวคิดและเทคนิค →</a></div>
 </section>
@@ -133,12 +135,112 @@
     <div class="card"><h3>Privacy by design</h3><p>ข้อมูลลับเข้ารหัส เปิดตามสิทธิ์ (DAC)</p></div>
   </div>
   <figure><div class="tall"><img src="img/core-infographic.webp" alt="Infographic แกนกลาง DPP ของไทย 6 ชั้น" loading="lazy"></div><figcaption>รูปที่ 3 Infographic Thailand DPP Core (เลื่อนดูในกรอบ)</figcaption></figure>
-  <div class="pager"><a href="#home">← ภาพรวม DPP</a><a href="#cases">กรณีทุเรียน + แบตเตอรี่ →</a></div>
+  <div class="pager"><a href="#home">← ภาพรวม DPP</a><a href="#data">DPP Data Layer + ตัวอย่าง →</a></div>
 </section>
 
-<!-- ======================= 03 CASES ======================= -->
+<!-- ======================= 03 DATA LAYER ======================= -->
+<section class="page" id="data" data-page hidden>
+  <div class="eyebrow">03 · DPP data layer &amp; examples · UNTP 0.7.0</div>
+  <h1>DPP · DFR · DCC · DTE: ข้อมูลหน้าตาอย่างไร และต่อกันอย่างไร</h1>
+  <p class="lede">โครงข้อมูล 4 ชนิดตาม UNTP พร้อมตัวอย่างข้อมูลทีละขั้นของทุเรียนล็อต A26 ส่งจีน และแบตเตอรี่ EV ส่ง EU ชื่อบริษัท โดเมน รหัส และตัวเลขทั้งหมดเป็นตัวอย่างสมมติ</p>
+
+  <nav class="dl-tabs" role="tablist" aria-label="หัวข้อในหน้านี้">
+    <button role="tab" data-t="dl-overview" aria-selected="true">ภาพรวม 4 credential</button>
+    <button role="tab" data-t="dl-durian" aria-selected="false">ทุเรียน → จีน</button>
+    <button role="tab" data-t="dl-battery" aria-selected="false">แบตเตอรี่ → EU</button>
+    <button role="tab" data-t="dl-links" aria-selected="false">สรุปการเชื่อมโยง</button>
+  </nav>
+
+  <!-- ================= OVERVIEW ================= -->
+  <section id="dl-overview" class="dl-panel" role="tabpanel">
+    <h2>ทั้ง 4 ชนิดเป็น W3C Verifiable Credential เหมือนกัน</h2>
+    <p>ทุกใบมี "ซอง" เดียวกัน ต่างกันที่ <code>type</code> และสิ่งที่อยู่ใน <code>credentialSubject</code> ผู้ออกลงนามด้วยกุญแจของ DID ตัวเอง แล้วเก็บไว้ที่ระบบของตัวเอง</p>
+    <details open><summary>ซองกลางของทุก credential (VC 2.0)</summary><pre id="dl-envelope"></pre></details>
+
+    <h2>4 ชนิด ตอบคนละคำถาม</h2>
+    <div class="grid4">
+      <div class="card ctype" style="--c:var(--dpp)"><h3><span class="chip dpp">DPP</span> สินค้า</h3><p style="font-size:14px;color:var(--muted);margin:0">"สินค้านี้คืออะไร อ้างอะไรไว้"</p>
+        <dl><dt>ผู้ออก</dt><dd>ผู้ผลิต / ผู้ส่งออก</dd><dt>credentialSubject</dt><dd><code>Product</code></dd><dt>ฟิลด์หลัก</dt><dd><code>idGranularity</code> <code>productCategory</code> <code>producedAtFacility</code> <code>relatedParty</code> <code>materialProvenance</code> <code>characteristics</code> <code>performanceClaim</code> <code>relatedDocument</code></dd></dl></div>
+      <div class="card ctype" style="--c:var(--dfr)"><h3><span class="chip dfr">DFR</span> สถานที่</h3><p style="font-size:14px;color:var(--muted);margin:0">"ผลิตที่ไหน สถานที่นี้เป็นอย่างไร"</p>
+        <dl><dt>ผู้ออก</dt><dd>เจ้าของ / ผู้ดำเนินการสถานที่</dd><dt>credentialSubject</dt><dd><code>Facility</code></dd><dt>ฟิลด์หลัก</dt><dd><code>registeredId</code> <code>idScheme</code> <code>locationInformation</code> <code>address</code> <code>processCategory</code> <code>relatedParty</code> <code>performanceClaim</code></dd></dl></div>
+      <div class="card ctype" style="--c:var(--dcc)"><h3><span class="chip dcc">DCC</span> การรับรอง</h3><p style="font-size:14px;color:var(--muted);margin:0">"ใครตรวจ ตรวจอะไร ผ่านไหม"</p>
+        <dl><dt>ผู้ออก</dt><dd>หน่วยรับรอง / แล็บ / หน่วยงานรัฐ</dd><dt>credentialSubject</dt><dd><code>ConformityAttestation</code></dd><dt>ฟิลด์หลัก</dt><dd><code>attestationType</code> <code>issuedToParty</code> <code>referenceScheme</code> <code>conformityAssessment[]</code> → <code>assessedProduct</code> / <code>assessedFacility</code> <code>assessedPerformance</code> <code>conformance</code></dd></dl></div>
+      <div class="card ctype" style="--c:var(--dte)"><h3><span class="chip dte">DTE</span> เหตุการณ์</h3><p style="font-size:14px;color:var(--muted);margin:0">"ของเปลี่ยนมือ แปรรูป ย้ายที่ เมื่อไร"</p>
+        <dl><dt>ผู้ออก</dt><dd>คนที่ทำกิจกรรมนั้น</dd><dt>credentialSubject</dt><dd>อาร์เรย์ของ <code>MakeEvent</code> <code>MoveEvent</code> <code>ModifyEvent</code></dd><dt>ฟิลด์หลัก</dt><dd><code>eventDate</code> <code>activityType</code> <code>inputProduct</code> → <code>outputProduct</code> <code>movedProduct</code> <code>madeAtFacility</code> <code>sensorData</code></dd></dl></div>
+    </div>
+
+    <h2>ต่อกันด้วย "ID ที่ resolve ได้" ไม่ใช่ฝังข้อมูลซ้ำ</h2>
+    <p>แต่ละ credential อ้างถึงกันด้วย ID ของสินค้า สถานที่ หรือ URL ของ credential อื่น ถ้าอยากรู้รายละเอียดก็ไปถาม IDR ด้วย ID นั้น แล้วตามลิงก์ไปดึงจากต้นทาง</p>
+    <div class="tbl"><table>
+      <thead><tr><th>จาก</th><th>ฟิลด์</th><th>ชี้ไปที่</th><th>ความหมาย</th></tr></thead>
+      <tbody>
+        <tr><td><span class="chip dpp">DPP</span></td><td class="f">performanceClaim[].evidence[]</td><td><span class="chip dcc">DCC</span></td><td>"ที่อ้างว่า GAP / carbon 61.5 มีใครรับรอง" (<code>linkType: dcc</code>)</td></tr>
+        <tr><td><span class="chip dpp">DPP</span></td><td class="f">producedAtFacility.id</td><td><span class="chip dfr">DFR</span></td><td>ID สถานที่ผลิต เอาไป resolve ได้ DFR</td></tr>
+        <tr><td><span class="chip dpp">DPP</span></td><td class="f">relatedDocument[]</td><td><span class="chip dte">DTE</span> <span class="chip doc">DOC</span></td><td>เหตุการณ์ของสินค้านี้ และเอกสารการค้า เช่น e-Phyto, invoice</td></tr>
+        <tr><td><span class="chip dte">DTE</span></td><td class="f">outputProduct[].product.id</td><td><span class="chip dpp">DPP</span></td><td>ID เดียวกับ <code>credentialSubject.id</code> ของ DPP ที่เกิดจากเหตุการณ์นี้</td></tr>
+        <tr><td><span class="chip dte">DTE</span></td><td class="f">inputProduct[].product.id</td><td><span class="chip dpp">DPP</span> ต้นน้ำ</td><td>วัตถุดิบมาจากล็อตไหน ต่อย้อนกลับได้เรื่อย ๆ</td></tr>
+        <tr><td><span class="chip dte">DTE</span></td><td class="f">madeAtFacility.id</td><td><span class="chip dfr">DFR</span></td><td>เกิดที่สถานที่ไหน</td></tr>
+        <tr><td><span class="chip dcc">DCC</span></td><td class="f">conformityAssessment[].assessedProduct / assessedFacility</td><td><span class="chip dpp">DPP</span> <span class="chip dfr">DFR</span></td><td>ตรวจสินค้าหรือสถานที่ไหน (ID เดียวกัน)</td></tr>
+        <tr><td><span class="chip dfr">DFR</span></td><td class="f">performanceClaim[].evidence[]</td><td><span class="chip dcc">DCC</span></td><td>ใบรับรองระดับสถานที่ เช่น GAP, GMP, ไฟฟ้าหมุนเวียน</td></tr>
+        <tr><td>ทุกใบ</td><td class="f">issuer.id</td><td>DID → DIA / Trust Registry</td><td>ใครออก และมีสิทธิ์ออกไหม</td></tr>
+      </tbody></table></div>
+    <div class="note">ตัวอย่างในหน้านี้ใช้ชื่อฟิลด์ตามตัวอย่างของ UNTP 0.7.0 แบบย่อ ฟิลด์เฉพาะของไทย เช่น ผลผลิตคาดการณ์สำหรับ mass balance วางไว้ใน <code>assessedPerformance</code> หรือ <code>characteristics</code> ซึ่งต้องกำหนดให้ชัดใน Durian / Battery Profile และต้องตรวจกับ JSON Schema ของ UNTP ก่อนใช้จริง</div>
+  </section>
+
+  <!-- ================= DURIAN ================= -->
+  <section id="dl-durian" class="dl-panel" role="tabpanel" hidden>
+    <h2>ทุเรียนหมอนทอง ล็อต A26 → จีน</h2>
+    <p>ระดับตัวระบุ: <b>ล็อต</b> (<code>idGranularity: "batch"</code>) หนึ่งล็อต = 1 คันรถห้องเย็น 1,000 กล่อง 18,000 กก. คัดจาก 3 แปลง GAP</p>
+    <div class="fig" id="dl-fig-durian"></div>
+    <div id="dl-steps-durian"></div>
+  </section>
+
+  <!-- ================= BATTERY ================= -->
+  <section id="dl-battery" class="dl-panel" role="tabpanel" hidden>
+    <h2>แบตเตอรี่ EV 75 kWh → EU</h2>
+    <p>ระดับตัวระบุ: <b>รายชิ้น</b> (<code>idGranularity: "item"</code>) ตามที่ Battery Passport ของ EU ต้องการ แต่ใบรับรองบางใบ เช่น carbon footprint ออกที่ <b>ระดับรุ่น</b> แล้วทุกก้อนในรุ่นนั้นอ้างถึงใบเดียวกัน</p>
+    <div class="fig" id="dl-fig-battery"></div>
+    <div id="dl-steps-battery"></div>
+  </section>
+
+  <!-- ================= LINKS SUMMARY ================= -->
+  <section id="dl-links" class="dl-panel" role="tabpanel" hidden>
+    <h2>สองเคสต่างกันตรงไหน</h2>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>ทุเรียน → จีน</th><th>แบตเตอรี่ → EU</th></tr></thead>
+      <tbody>
+        <tr><td><b>ระดับ ID ของ DPP</b></td><td>ล็อต <code>/01/{GTIN}/10/A26</code></td><td>รายชิ้น <code>/01/{GTIN}/21/{serial}</code></td></tr>
+        <tr><td><b>DFR สำคัญที่สุด</b></td><td>แปลง GAP (พิกัด ขอบเขตแปลง) + โรงคัด GMP</td><td>โรงงานประกอบ + เหมือง/โรงถลุงต้นน้ำ</td></tr>
+        <tr><td><b>DCC หลัก</b></td><td>GAP (ระดับแปลง), ผลตรวจล็อต (ระดับล็อต)</td><td>Carbon footprint, UN 38.3 (ระดับรุ่น)</td></tr>
+        <tr><td><b>DTE หลัก</b></td><td>Make: 3 แปลง → ล็อต A26 · Move: สวน → ด่าน</td><td>Make: เซลล์ → แพ็ก · Move: เรือ · Modify: SoH / ซ่อม / รีไซเคิล</td></tr>
+        <tr><td><b>เอกสารการค้าที่ผูก</b></td><td>e-Phyto, invoice (TLX), ใบขน (NSW)</td><td>ใบขน, EU DPP Registry</td></tr>
+        <tr><td><b>ช่วงชีวิตข้อมูล</b></td><td>สั้น: เก็บ → ขาย ~ 2–3 สัปดาห์</td><td>ยาว: 10+ ปี มีการอัปเดตระหว่างใช้งาน</td></tr>
+        <tr><td><b>ระดับการเข้าถึง</b></td><td>สาธารณะ / คู่ค้า (invoice) / หน่วยงานรัฐ (e-Phyto)</td><td>สาธารณะ / ผู้มีส่วนได้เสีย (recycler) / หน่วยงานรัฐ</td></tr>
+        <tr><td><b>จุดตรวจเฉพาะ</b></td><td>Mass balance ล็อต ↔ ผลผลิตแปลง</td><td>Recycled content, carbon class ตาม Battery Regulation</td></tr>
+      </tbody></table></div>
+
+    <h2>ลำดับที่ข้อมูลเกิด (ใช้ได้ทั้งสองเคส)</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>ลำดับ</th><th>เกิดอะไร</th><th>Credential</th><th>ต้องมีก่อน</th></tr></thead>
+      <tbody>
+        <tr><td class="f">1</td><td>ขึ้นทะเบียนสถานที่</td><td><span class="chip dfr">DFR</span></td><td>DID + DIA ของเจ้าของสถานที่</td></tr>
+        <tr><td class="f">2</td><td>รับรองสถานที่</td><td><span class="chip dcc">DCC</span> (assessedFacility)</td><td>ID สถานที่จาก DFR</td></tr>
+        <tr><td class="f">3</td><td>ผลิต / แปรรูป / ประกอบ</td><td><span class="chip dte">DTE</span> MakeEvent</td><td>ID ของวัตถุดิบ (input) และ ID สินค้าใหม่ (output)</td></tr>
+        <tr><td class="f">4</td><td>ตรวจสินค้า</td><td><span class="chip dcc">DCC</span> (assessedProduct)</td><td>ID สินค้า</td></tr>
+        <tr><td class="f">5</td><td>ออกพาสปอร์ต</td><td><span class="chip dpp">DPP</span></td><td>ลิงก์ไป DCC, DFR, DTE ข้างบน</td></tr>
+        <tr><td class="f">6</td><td>ลงทะเบียนลิงก์</td><td>IDR linkset / Registry</td><td>URL ของทุก credential</td></tr>
+        <tr><td class="f">7</td><td>ขนส่ง / ใช้งาน / ซ่อม</td><td><span class="chip dte">DTE</span> Move / Modify</td><td>ID สินค้า</td></tr>
+      </tbody></table></div>
+    <div class="note">หลักสำคัญ: ไม่มี credential ใบไหน "รวม" ข้อมูลทุกอย่างไว้ DPP เป็นแค่จุดตั้งต้นที่มีลิงก์ไปใบอื่น ผู้ตรวจต้องเดินตามลิงก์และ verify ลายเซ็นทีละใบ ข้อมูลแต่ละส่วนจึงยังเป็นของผู้ออกเดิม</div>
+  </section>
+
+  <p class="dl-src">อ้างอิงโครงข้อมูลจาก <a href="https://untp.unece.org/docs/0.7.0/specification/DigitalProductPassport">UNTP 0.7.0 DPP</a>, <a href="https://untp.unece.org/docs/0.7.0/specification/DigitalFacilityRecord">DFR</a>, <a href="https://untp.unece.org/docs/0.7.0/specification/ConformityCredential">DCC</a>, <a href="https://untp.unece.org/docs/0.7.0/specification/DigitalTraceabilityEvents">DTE</a> · ตัวอย่างเป็นข้อมูลสมมติเพื่อการออกแบบ Durian / Battery Profile</p>
+  <div class="pager"><a href="#concept">← แนวคิดและเทคนิค</a><a href="#cases">กรณีทุเรียน + แบตเตอรี่ →</a></div>
+</section>
+
+<!-- ======================= 04 CASES ======================= -->
 <section class="page" id="cases" data-page hidden>
-  <div class="eyebrow">03 · Use cases</div>
+  <div class="eyebrow">04 · Use cases</div>
   <h1>กรณีทุเรียน → จีน และแบตเตอรี่ → EU</h1>
   <p class="lede">ใช้ Core component ชุดเดียวกัน ต่างกันที่ component ที่เปิดใช้และคู่ค้าปลายทาง ตาม TOR ทุเรียนต้องทดลองกับธุรกรรมจริง ส่วนแบตเตอรี่ทำถึงระดับต้นแบบ</p>
 
@@ -184,12 +286,12 @@
   </ol>
   <p class="note">อาหารรวมถึงทุเรียนอยู่นอกขอบเขต ESPR ไทยจึงเชื่อมกับ EU ผ่านสินค้าอย่างแบตเตอรี่และสิ่งทอ ขั้นที่ 5 (ศุลกากร EU ตรวจการลงทะเบียน) ควรยืนยันกับตัวบท ESPR อีกครั้งก่อนใช้ในเอกสารทางการ</p>
   <figure><img src="img/sketch-overview.webp" alt="ภาพวาดมือภาพรวม DPP ตาม UNTP" loading="lazy"><figcaption>รูปที่ 7 ภาพวาดมือภาพรวม DPP ตาม UNTP ใช้สื่อสารกับผู้ประกอบการ</figcaption></figure>
-  <div class="pager"><a href="#concept">← แนวคิดและเทคนิค</a><a href="#tor">ขอบเขตงานตาม TOR →</a></div>
+  <div class="pager"><a href="#data">← DPP Data Layer + ตัวอย่าง</a><a href="#tor">ขอบเขตงานตาม TOR →</a></div>
 </section>
 
-<!-- ======================= 04 TOR ======================= -->
+<!-- ======================= 05 TOR ======================= -->
 <section class="page" id="tor" data-page hidden>
-  <div class="eyebrow">04 · Terms of Reference</div>
+  <div class="eyebrow">05 · Terms of Reference</div>
   <h1>ขอบเขตงานตาม TOR</h1>
   <p class="lede">โครงการพัฒนาแนวทางการค้าดิจิทัลข้ามพรมแดนและพาสปอร์ตดิจิทัลสำหรับผลิตภัณฑ์ (DPP) จัดทำโดย สพธอ. ลงวันที่ 24 ก.ย. 2569 มี 6 ขอบเขตงานหลัก (4.2–4.7) และงานสนับสนุน 2 ส่วน (4.1 และ 4.8)</p>
 
@@ -216,9 +318,9 @@
   <div class="pager"><a href="#cases">← กรณีทุเรียน + แบตเตอรี่</a><a href="#work">Output และกิจกรรม →</a></div>
 </section>
 
-<!-- ======================= 05 WORK ======================= -->
+<!-- ======================= 06 WORK ======================= -->
 <section class="page" id="work" data-page hidden>
-  <div class="eyebrow">05 · Outputs & activities (ข้อเสนอ)</div>
+  <div class="eyebrow">06 · Outputs & activities (ข้อเสนอ)</div>
   <h1>Output และกิจกรรมรายขอบเขตงาน</h1>
   <p class="lede">แตกขอบเขตงาน 4.2–4.7 เป็น output ที่ต้องส่ง และกิจกรรมที่ทีมต้องลงมือทำ พร้อมวิธีทำ ผู้รับผิดชอบ เดือน และหลักฐานที่ใช้ติดตาม กิจกรรมจัดกลุ่มตามรหัส WBS ในหน้าแผนงาน</p>
 
@@ -243,9 +345,9 @@
   <div class="pager"><a href="#tor">← ขอบเขตงานตาม TOR</a><a href="#plan">แผนงาน 8 เดือน →</a></div>
 </section>
 
-<!-- ======================= 06 PLAN ======================= -->
+<!-- ======================= 07 PLAN ======================= -->
 <section class="page" id="plan" data-page hidden>
-  <div class="eyebrow">06 · Project plan (ข้อเสนอ)</div>
+  <div class="eyebrow">07 · Project plan (ข้อเสนอ)</div>
   <h1>แผนงาน 8 เดือน: พ.ย. 2569 – มิ.ย. 2570</h1>
   <p class="lede">จัดลำดับให้การทดลองธุรกรรมทุเรียนจริงตรงกับช่วงทุเรียนภาคตะวันออกออกมาก (ประมาณ เม.ย.–พ.ค.) และให้ Battery Profile เสร็จใกล้วันบังคับใช้ Battery Passport ของ EU (18 ก.พ. 2027)</p>
 
@@ -289,9 +391,9 @@
   <div class="pager"><a href="#work">← Output และกิจกรรม</a><a href="#team">ทีมงานและผู้เกี่ยวข้อง →</a></div>
 </section>
 
-<!-- ======================= 07 TEAM ======================= -->
+<!-- ======================= 08 TEAM ======================= -->
 <section class="page" id="team" data-page hidden>
-  <div class="eyebrow">07 · Team & stakeholders (ข้อเสนอ)</div>
+  <div class="eyebrow">08 · Team & stakeholders (ข้อเสนอ)</div>
   <h1>ทีมงานและผู้เกี่ยวข้อง</h1>
   <p class="lede">TOR กำหนดขั้นต่ำ 3 บทบาท (PM, PMO/Coordinator, ผู้ประสานงานภาษาจีน) ตารางด้านล่างเสนอทีมเต็มตามงานทั้ง 6 ขอบเขต</p>
 
@@ -361,5 +463,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <script src="js/config.js" defer></script>
 <script src="js/app.js" defer></script>
+<script src="js/datalayer.js" defer></script>
 </body>
 </html>

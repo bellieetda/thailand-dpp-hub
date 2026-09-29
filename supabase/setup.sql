@@ -8,19 +8,19 @@
 --   milestones      Gantt diamonds + flag markers         (MS + Battery Passport flag)
 --   scopes          scope cards 4.2–4.7 on the TOR page   (SC)
 --   scope_items     heading/paragraph pairs in each card  (SC[..][3])
---   scope_outputs   outputs per scope, page 05            (OUT)
---   scope_tasks     activities to do + status, page 05    (TASK) · scopes.inputs/outputs_to/watch_out = SN
---   scope_task_log  history of status changes made on page 05 (via set_task_status, section 3b)
+--   scope_outputs   outputs per scope, page 06            (OUT)
+--   scope_tasks     activities to do + status, page 06    (TASK) · scopes.inputs/outputs_to/watch_out = SN
+--   scope_task_log  history of status changes made on page 06 (via set_task_status, section 3b)
 --   app_secrets     hashed team passcode for status changes (not readable through the API)
 --   ---- HTML tables in index.html ----
 --   key_dates               01 ทำไมต้องเริ่มตอนนี้
 --   untp_pillars            02 5 เสาหลักของ UNTP
---   case_comparison         03 ทุเรียน → จีน vs แบตเตอรี่ → EU
---   deliverables            05 สิ่งส่งมอบที่เสนอ
---   risks                   05 ความเสี่ยงหลัก
---   team_roles              06 โครงสร้างทีมที่เสนอ
---   raci                    06 RACI ตามขอบเขตงาน
---   stakeholder_activities  06 กิจกรรมที่ต้องใช้ผู้มีส่วนได้ส่วนเสีย
+--   case_comparison         04 ทุเรียน → จีน vs แบตเตอรี่ → EU
+--   deliverables            07 สิ่งส่งมอบที่เสนอ
+--   risks                   07 ความเสี่ยงหลัก
+--   team_roles              08 โครงสร้างทีมที่เสนอ
+--   raci                    08 RACI ตามขอบเขตงาน
+--   stakeholder_activities  08 กิจกรรมที่ต้องใช้ผู้มีส่วนได้ส่วนเสีย
 
 -- =========================================================
 -- 1) TABLES
@@ -79,7 +79,7 @@ create table if not exists public.scope_items (
   unique (scope_id, heading)
 );
 
--- page 05 (Output และกิจกรรม): notes per scope, outputs, and the activities the team tracks
+-- page 06 (Output และกิจกรรม): notes per scope, outputs, and the activities the team tracks
 alter table public.scopes add column if not exists inputs     text;   -- 'รับจาก'
 alter table public.scopes add column if not exists outputs_to text;   -- 'ส่งต่อให้'
 alter table public.scopes add column if not exists watch_out  text;   -- 'ต้องระวัง'
@@ -542,7 +542,7 @@ alter table public.app_secrets enable row level security;
 revoke all on public.app_secrets from anon, authenticated;
 
 -- =========================================================
--- 3b) STATUS CHANGES from the web page (page 05)
+-- 3b) STATUS CHANGES from the web page (page 06)
 --     The page calls set_task_status(); it checks the team passcode, updates the status,
 --     stamps date/time + name, and appends a row to scope_task_log.
 --     Set or change the passcode by running this line on its own (replace the text in quotes;
