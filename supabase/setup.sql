@@ -27,8 +27,8 @@
 -- =========================================================
 create table if not exists public.project_months (
   code       text primary key,          -- 'M1'
-  label      text not null,             -- 'พ.ย. 69'
-  starts_on  date not null,             -- 2026-11-01
+  label      text not null,             -- '25 พ.ย. 69 – 24 ธ.ค. 69'
+  starts_on  date not null,             -- 2026-11-25
   sort_order int  not null
 );
 
@@ -129,14 +129,14 @@ create table if not exists public.app_secrets (
 -- 2) DATA (copied from js/app.js)
 -- =========================================================
 insert into public.project_months (code, label, starts_on, sort_order) values
-  ('M1','พ.ย. 69','2026-11-01',1),
-  ('M2','ธ.ค. 69','2026-12-01',2),
-  ('M3','ม.ค. 70','2027-01-01',3),
-  ('M4','ก.พ. 70','2027-02-01',4),
-  ('M5','มี.ค. 70','2027-03-01',5),
-  ('M6','เม.ย. 70','2027-04-01',6),
-  ('M7','พ.ค. 70','2027-05-01',7),
-  ('M8','มิ.ย. 70','2027-06-01',8)
+  ('M1','25 พ.ย. 69 – 24 ธ.ค. 69','2026-11-25',1),
+  ('M2','25 ธ.ค. 69 – 24 ม.ค. 70','2026-12-25',2),
+  ('M3','25 ม.ค. 70 – 24 ก.พ. 70','2027-01-25',3),
+  ('M4','25 ก.พ. 70 – 24 มี.ค. 70','2027-02-25',4),
+  ('M5','25 มี.ค. 70 – 24 เม.ย. 70','2027-03-25',5),
+  ('M6','25 เม.ย. 70 – 24 พ.ค. 70','2027-04-25',6),
+  ('M7','25 พ.ค. 70 – 24 มิ.ย. 70','2027-05-25',7),
+  ('M8','25 มิ.ย. 70 – 24 ก.ค. 70','2027-06-25',8)
 on conflict (code) do update set label=excluded.label, starts_on=excluded.starts_on, sort_order=excluded.sort_order;
 
 insert into public.workstreams (id, color_var, name, sort_order) values
@@ -197,7 +197,7 @@ insert into public.milestones (ws_id, month, label, kind, sort_order) values
   ('4.5',7.95,'D4 Interim 3','milestone',8),
   ('4.8',8.6,'สัมมนาเผยแพร่','milestone',9),
   ('4.8',8.95,'D5 Final','milestone',10),
-  ('4.4',4.58,'18 ก.พ. 2027 Battery Passport EU','flag',11)
+  ('4.4',3.7741935484,'18 ก.พ. 2027 Battery Passport EU','flag',11)
 on conflict (ws_id, label) do update set month=excluded.month, kind=excluded.kind, sort_order=excluded.sort_order;
 
 insert into public.scopes (id, title, period, inputs, outputs_to, watch_out, sort_order) values
@@ -625,7 +625,7 @@ create table if not exists public.case_comparison (
 
 create table if not exists public.deliverables (
   code       text primary key,          -- 'D1'
-  due_label  text not null,             -- 'สิ้น พ.ย. 69'
+  due_label  text not null,             -- '24 ธ.ค. 69'
   month_code text not null references public.project_months(code),
   title      text not null,             -- 'Inception Report'
   content    text not null,
@@ -680,7 +680,7 @@ create table if not exists public.stakeholder_activities (
 -- =========================================================
 insert into public.key_dates (when_label, event_date, event, impact, sort_order) values
   ('20 ก.ค. 2026','2026-07-20','EU DPP Registry เปิดใช้งาน เก็บเฉพาะ ID และผู้ประกอบการ ข้อมูลจริงอยู่ที่ผู้ผลิต','ต้องมี ID และ provider ที่ต่อ API กับ EU ได้',1),
-  ('18 ก.พ. 2027','2027-02-18','Battery Passport ภาคบังคับเริ่มสำหรับแบตเตอรี่บางกลุ่ม (ESPR / Battery Regulation)','ตรงกับเดือนที่ 4 ของโครงการ ผู้ผลิตแบตไทยต้องเตรียมตัว',2),
+  ('18 ก.พ. 2027','2027-02-18','Battery Passport ภาคบังคับเริ่มสำหรับแบตเตอรี่บางกลุ่ม (ESPR / Battery Regulation)','ตรงกับเดือนที่ 3 ของโครงการ (M3) ผู้ผลิตแบตไทยต้องเตรียมตัว',2),
   ('ฤดูกาล 2026',null,'จีนเข้มงวดการตรวจย้อนกลับ มีกรณีข้อร้องเรียนทุเรียนและการสวมสิทธิ์ GAP','ต้องให้ GACC ตรวจ GAP ได้เองจากข้อมูลดิจิทัล',3),
   ('ต่อเนื่อง',null,'กรอบ CPTA (ESCAP) ผลักดันการค้าไร้กระดาษข้ามพรมแดน','DPP ต้องเชื่อมกับเอกสารการค้า เช่น invoice ผ่าน TLX',4)
 on conflict (when_label) do update set event_date=excluded.event_date, event=excluded.event, impact=excluded.impact, sort_order=excluded.sort_order;
@@ -702,11 +702,11 @@ insert into public.case_comparison (aspect, durian_china, battery_eu, sort_order
 on conflict (aspect) do update set durian_china=excluded.durian_china, battery_eu=excluded.battery_eu, sort_order=excluded.sort_order;
 
 insert into public.deliverables (code, due_label, month_code, title, content, scope_text, sort_order) values
-  ('D1','สิ้น พ.ย. 69','M1','Inception Report','Project Plan, Methodology, Work Plan, Stakeholder Engagement Plan, แผนลงพื้นที่ไทย–จีน, Risk Plan, โครงสร้างทีม','4.1',1),
-  ('D2','สิ้น ม.ค. 70','M3','Interim 1','Landscape, Stakeholder Map, ผลสัมภาษณ์ ≥ 20 ราย, Focus Group, Gap Analysis, Thailand DPP Reference Architecture, ทางเลือก Operating Model, Roadmap ฉบับตั้งต้น, Supply Chain Map, Document & Data Inventory, As-Is','4.2, 4.3',2),
-  ('D3','สิ้น มี.ค. 70','M5','Interim 2','Pain Point, Value Proposition, To-Be, Cross-Border Data Exchange Requirements, DPP–Invoice linking, Core Data Model + Data Dictionary, Durian/Battery Profile, Technical Components + OpenAPI, ผลรับฟังความคิดเห็น','4.3, 4.4',3),
-  ('D4','สิ้น พ.ค. 70','M7','Interim 3','ร่าง Thailand DPP Core Standard + Standards Mapping + Conformance Checklist/Test Cases + ผลรับฟัง, Prototype ที่ทดสอบแล้ว, แผนและผลธุรกรรมจริง','4.5, 4.6, 4.7',4),
-  ('D5','สิ้น มิ.ย. 70','M8','Final','Final Report, Roadmap ฉบับสมบูรณ์, Operating Model + Business Model, Executive Summary TH/EN, Presentation, Submission Package สมอ., Source code + เอกสารระบบ + คู่มือ + ถ่ายทอดความรู้, ผลประเมินนำร่อง, กิจกรรมเผยแพร่','4.5–4.8',5)
+  ('D1','24 ธ.ค. 69','M1','Inception Report','Project Plan, Methodology, Work Plan, Stakeholder Engagement Plan, แผนลงพื้นที่ไทย–จีน, Risk Plan, โครงสร้างทีม','4.1',1),
+  ('D2','24 ก.พ. 70','M3','Interim 1','Landscape, Stakeholder Map, ผลสัมภาษณ์ ≥ 20 ราย, Focus Group, Gap Analysis, Thailand DPP Reference Architecture, ทางเลือก Operating Model, Roadmap ฉบับตั้งต้น, Supply Chain Map, Document & Data Inventory, As-Is','4.2, 4.3',2),
+  ('D3','24 เม.ย. 70','M5','Interim 2','Pain Point, Value Proposition, To-Be, Cross-Border Data Exchange Requirements, DPP–Invoice linking, Core Data Model + Data Dictionary, Durian/Battery Profile, Technical Components + OpenAPI, ผลรับฟังความคิดเห็น','4.3, 4.4',3),
+  ('D4','24 มิ.ย. 70','M7','Interim 3','ร่าง Thailand DPP Core Standard + Standards Mapping + Conformance Checklist/Test Cases + ผลรับฟัง, Prototype ที่ทดสอบแล้ว, แผนและผลธุรกรรมจริง','4.5, 4.6, 4.7',4),
+  ('D5','24 ก.ค. 70','M8','Final','Final Report, Roadmap ฉบับสมบูรณ์, Operating Model + Business Model, Executive Summary TH/EN, Presentation, Submission Package สมอ., Source code + เอกสารระบบ + คู่มือ + ถ่ายทอดความรู้, ผลประเมินนำร่อง, กิจกรรมเผยแพร่','4.5–4.8',5)
 on conflict (code) do update set due_label=excluded.due_label, month_code=excluded.month_code, title=excluded.title,
   content=excluded.content, scope_text=excluded.scope_text, sort_order=excluded.sort_order;
 

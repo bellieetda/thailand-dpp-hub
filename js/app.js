@@ -16,6 +16,16 @@
   const fill=(id,html)=>{const el=$(id);if(el)el.innerHTML=html};
   const bySort=rows=>[...rows].sort((a,b)=>(a.sort_order??0)-(b.sort_order??0));
 
+  /* Proposed kickoff: 25 Nov 2026. Project months run from the 25th to the 24th. */
+  const PLAN_START={year:2026,month:10,day:25}, DAY=86400000;
+  const monthBoundary=i=>Date.UTC(PLAN_START.year,PLAN_START.month+i,PLAN_START.day);
+  const projectDate=m=>{
+    const offset=Number(m)-1, whole=Math.floor(offset), fraction=offset-whole;
+    return monthBoundary(whole)+fraction*(monthBoundary(whole+1)-monthBoundary(whole));
+  };
+  const dateLabel=time=>new Intl.DateTimeFormat('th-TH',{day:'numeric',month:'short',year:'2-digit',timeZone:'UTC'}).format(new Date(time));
+  const dueLabel=(code,fallback)=>/^M[1-8]$/.test(code)?dateLabel(monthBoundary(Number(code.slice(1)))-DAY):fallback;
+
   /* ---------- built-in data: shown first, and kept when Supabase is not configured or not reachable ---------- */
   const FALLBACK={
     WS:{
@@ -28,7 +38,7 @@
       '4.7':{c:'--ws6',n:'นำร่องธุรกรรมจริง'},
       '4.8':{c:'--ws7',n:'สรุปผลและเผยแพร่'},
     },
-    MONTHS:[['M1','พ.ย. 69'],['M2','ธ.ค. 69'],['M3','ม.ค. 70'],['M4','ก.พ. 70'],['M5','มี.ค. 70'],['M6','เม.ย. 70'],['M7','พ.ค. 70'],['M8','มิ.ย. 70']],
+    MONTHS:Array.from({length:8},(_,i)=>['M'+(i+1),`${dateLabel(monthBoundary(i))} – ${dateLabel(monthBoundary(i+1)-DAY)}`]),
     // [id, ws, name, start(month,1-based, fractional), end, output, owner]
     A:[
       ['4.1.1','4.1','จัดทำ Inception Report',1.0,1.95,'Project/Work Plan, Methodology, Stakeholder & Field Plan, Risk Plan, ทีม','PM, PMO'],
@@ -66,7 +76,7 @@
     ],
     // [ws, month, label]
     MS:[['4.1',1.95,'D1 Inception'],['4.2',3.45,'Focus Group'],['4.2',3.95,'D2 Interim 1'],['4.3',3.0,'รับฟัง As-Is'],['4.3',4.65,'รับฟัง To-Be'],['4.4',5.95,'D3 Interim 2'],['4.7',6.6,'Go-live ธุรกรรมจริง'],['4.5',7.95,'D4 Interim 3'],['4.8',8.6,'สัมมนาเผยแพร่'],['4.8',8.95,'D5 Final']],
-    FLAGS:[['4.4',4.58,'18 ก.พ. 2027 Battery Passport EU']],
+    FLAGS:[['4.4',3+24/31,'18 ก.พ. 2027 Battery Passport EU']],
     // [ws, title, period, [[heading, body], ...]]
     SC:[
       ['4.2','ศึกษา Landscape ระบบนิเวศ ช่องว่าง และ Implementation Roadmap','M1–M3 · Roadmap ฉบับสมบูรณ์ M8',[
@@ -241,24 +251,35 @@
   /* ---------- plan page: legend, Gantt, WBS, scope cards ---------- */
   function renderPlan(d){
     const WS=d.WS, n=d.MONTHS.length||8, color=k=>(WS[k]||{c:'--ws0'}).c;
-    const pct=m=>((m-1)/n*100).toFixed(2)+'%';
+    const axisStart=Date.UTC(PLAN_START.year,PLAN_START.month,1), axisEnd=Date.UTC(PLAN_START.year,PLAN_START.month+n+1,1);
+    const datePct=time=>((time-axisStart)/(axisEnd-axisStart)*100).toFixed(4)+'%';
+    const pct=m=>datePct(projectDate(m));
     const span=(s,e)=>`left:${pct(s)};width:calc(${pct(e)} - ${pct(s)})`;
+    const calendar=Array.from({length:n+1},(_,i)=>{
+      const start=Date.UTC(PLAN_START.year,PLAN_START.month+i,1), end=Date.UTC(PLAN_START.year,PLAN_START.month+i+1,1);
+      const label=new Intl.DateTimeFormat('th-TH',{month:'short',year:'2-digit',timeZone:'UTC'}).format(new Date(start));
+      return {start,end,label};
+    });
+    const columns=calendar.map(m=>`${(m.end-m.start)/DAY}fr`).join(' ');
+    const grid=calendar.slice(1).map(m=>`linear-gradient(90deg,transparent calc(${datePct(m.start)} - 1px),var(--line) calc(${datePct(m.start)} - 1px),var(--line) ${datePct(m.start)},transparent ${datePct(m.start)})`).join(',');
+    const trackStyle=`background-image:${grid};background-size:100% 100%`;
+    const period=(s,e)=>`${dateLabel(projectDate(s))} – ${dateLabel(Math.ceil(projectDate(e)/DAY)*DAY-DAY)}`;
 
     fill('legend',Object.entries(WS).map(([k,w])=>`<span style="--c:var(${esc(w.c)})"><i></i>${esc(k)} ${esc(w.n)}</span>`).join(''));
 
-    let h=`<div class="g-head"><div class="g-lab" style="font-weight:600">กิจกรรม</div><div class="g-months">${d.MONTHS.map(([m,t])=>`<div><b>${esc(m)}</b>${esc(t)}</div>`).join('')}</div></div>`;
+    let h=`<div class="g-head"><div class="g-lab" style="font-weight:600">กิจกรรม · เริ่มประมาณ 25 พ.ย. 69</div><div class="g-months" style="grid-template-columns:${columns}">${calendar.map((m,i)=>`<div>${esc(m.label)}<b>${i<n?`M${i+1} เริ่มวันที่ 25`:'สิ้นสุด 24 ก.ค.'}</b></div>`).join('')}</div></div>`;
     Object.entries(WS).forEach(([k,w])=>{
       const acts=d.A.filter(a=>a[1]===k), c=esc(w.c);
       const bar=acts.length?`<span class="g-bar" style="${span(Math.min(...acts.map(a=>a[3])),Math.max(...acts.map(a=>a[4])))}"></span>`:'';
-      const ms=d.MS.filter(m=>m[0]===k).map(m=>`<span class="g-ms" style="--c:var(${c});left:${pct(m[1])}" title="${esc(m[2])}"></span>`).join('');
-      const flags=d.FLAGS.filter(f=>f[0]===k).map(f=>`<span class="g-flag" style="left:${pct(f[1])}" title="${esc(f[2])}"></span>`).join('');
-      h+=`<div class="g-row grp" style="--c:var(${c})"><div class="g-lab"><span class="i">${esc(k)}</span>${esc(w.n)}</div><div class="g-track">${bar}${ms}${flags}</div></div>`;
-      acts.forEach(a=>{h+=`<div class="g-row" style="--c:var(${c})"><div class="g-lab"><span class="i">${esc(a[0])}</span>${esc(a[2])}</div><div class="g-track"><span class="g-bar" title="${esc(a[2])}" style="${span(a[3],a[4])}"></span></div></div>`});
+      const ms=d.MS.filter(m=>m[0]===k).map(m=>`<span class="g-ms" style="--c:var(${c});left:${pct(m[1])}" title="${esc(m[2])} · ${esc(dateLabel(projectDate(m[1])))}"></span>`).join('');
+      const flags=d.FLAGS.filter(f=>f[0]===k).map(f=>`<span class="g-flag" style="left:${f[2].includes('18 ก.พ. 2027')?datePct(Date.UTC(2027,1,18)):pct(f[1])}" title="${esc(f[2])}"></span>`).join('');
+      h+=`<div class="g-row grp" style="--c:var(${c})"><div class="g-lab"><span class="i">${esc(k)}</span>${esc(w.n)}</div><div class="g-track" style="${trackStyle}">${bar}${ms}${flags}</div></div>`;
+      acts.forEach(a=>{h+=`<div class="g-row" style="--c:var(${c})"><div class="g-lab"><span class="i">${esc(a[0])}</span>${esc(a[2])}</div><div class="g-track" style="${trackStyle}"><span class="g-bar" title="${esc(a[2])} · ${esc(period(a[3],a[4]))}" style="${span(a[3],a[4])}"></span></div></div>`});
     });
     fill('gantt',h);
 
     const wbs=document.querySelector('#wbs tbody');
-    if(wbs)wbs.innerHTML=d.A.map(a=>`<tr><td class="id" style="color:var(${esc(color(a[1]))})">${esc(a[0])}</td><td>${esc(a[2])}</td><td class="id">${mlabel(a[3],a[4],n)}</td><td>${esc(a[5])}</td><td>${esc(a[6])}</td></tr>`).join('');
+    if(wbs)wbs.innerHTML=d.A.map(a=>`<tr><td class="id" style="color:var(${esc(color(a[1]))})">${esc(a[0])}</td><td>${esc(a[2])}</td><td class="id">${mlabel(a[3],a[4],n)}<br>${esc(period(a[3],a[4]))}</td><td>${esc(a[5])}</td><td>${esc(a[6])}</td></tr>`).join('');
 
     fill('scopes',d.SC.map(([k,t,when,items])=>`<div class="card ws" style="--c:var(${esc(color(k))})"><div class="hd"><span class="code">${esc(k)}</span><h3>${esc(t)}</h3><span class="when">${esc(when)}</span></div>${items.map(([a,b])=>`<h4>${esc(a)}</h4><p>${esc(b)}</p>`).join('')}</div>`).join(''));
   }
@@ -310,7 +331,7 @@
   function planFromRows(r){
     const d={...FALLBACK};
     if(r.workstreams)d.WS=Object.fromEntries(bySort(r.workstreams).map(w=>[w.id,{c:w.color_var,n:w.name}]));
-    if(r.project_months)d.MONTHS=bySort(r.project_months).map(m=>[m.code,m.label]);
+    // Calendar labels are derived from the proposed kickoff, including when the database still has older month labels.
     if(r.activities)d.A=bySort(r.activities).map(a=>[a.id,a.ws_id,a.name,+a.start_month,+a.end_month,a.output,a.owner]);
     if(r.milestones){
       const ms=bySort(r.milestones);
@@ -331,10 +352,10 @@
   /* ---------- HTML tables in index.html: the static rows stay until Supabase rows arrive ---------- */
   const RACI_COLS=['etda','pm','trade_lead','ba','standards','data_arch','solution_arch','dev_qa','china'];
   const TABLES={
-    key_dates:['t-key-dates',r=>`<tr><td class="id">${esc(r.when_label)}</td><td>${esc(r.event)}</td><td>${esc(r.impact)}</td></tr>`],
+    key_dates:['t-key-dates',r=>`<tr><td class="id">${esc(r.when_label)}</td><td>${esc(r.event)}</td><td>${esc((r.impact||'').replace('ตรงกับเดือนที่ 4 ของโครงการ','ตรงกับเดือนที่ 3 ของโครงการ (M3)'))}</td></tr>`],
     untp_pillars:['t-untp',r=>`<tr><td><b>${esc(r.pillar)}</b></td><td>${(r.components||[]).map(c=>`<code>${esc(c)}</code>`).join(' ')}</td><td>${esc(r.role)}</td></tr>`],
     case_comparison:['t-cases',r=>`<tr><td><b>${esc(r.aspect)}</b></td><td>${esc(r.durian_china)}</td><td>${esc(r.battery_eu)}</td></tr>`],
-    deliverables:['t-deliverables',r=>`<tr><td class="id">${esc(r.code)}</td><td>${esc(r.due_label)} (${esc(r.month_code)})</td><td><b>${esc(r.title)}</b>: ${esc(r.content)}</td><td>${esc(r.scope_text)}</td></tr>`],
+    deliverables:['t-deliverables',r=>`<tr><td class="id">${esc(r.code)}</td><td>${esc(dueLabel(r.month_code,r.due_label))} (${esc(r.month_code)})</td><td><b>${esc(r.title)}</b>: ${esc(r.content)}</td><td>${esc(r.scope_text)}</td></tr>`],
     risks:['t-risks',r=>`<tr><td>${esc(r.risk)}</td><td>${esc(r.impact)}</td><td>${esc(r.mitigation)}</td></tr>`],
     team_roles:['t-team',r=>`<tr><td><b>${esc(r.role)}</b>${r.tor_required?' <span class="pill">TOR</span>':''}</td><td>${esc(r.duties)}</td><td>${esc(r.scope_text)}</td><td>${esc(r.period)}</td></tr>`],
     raci:['t-raci',r=>`<tr><td>${esc(r.label)}</td>${RACI_COLS.map(c=>r[c]?`<td class="${esc(r[c])}">${esc(r[c])}</td>`:'<td class="C">–</td>').join('')}</tr>`],
