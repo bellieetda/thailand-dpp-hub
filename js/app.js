@@ -322,6 +322,7 @@
         <h3>Output ที่ต้องส่ง</h3>
         <div class="tbl"><table class="outs"><thead><tr><th>รหัส</th><th>Output</th><th>ต้องมี / ถือว่าครบเมื่อ</th><th>งวด</th></tr></thead><tbody>${outs}</tbody></table></div>
         <h3>กิจกรรมที่ต้องทำและติดตาม</h3>
+        ${['4.2','4.3','4.4','4.5','4.6','4.7'].includes(k)?`<figure><img src="img/story-board-${esc(k)}.png" alt="Storyboard กิจกรรม${esc(t)}" loading="lazy"></figure>`:''}
         <div class="tbl"><table class="tasks"><thead><tr><th>รหัส</th><th>กิจกรรมและวิธีทำ</th><th>ผู้รับผิดชอบ</th><th>เดือน</th><th>หลักฐานที่ติดตาม</th><th>สถานะ</th></tr></thead><tbody>${rows}</tbody></table></div>
       </section>`;
     }).join(''));
